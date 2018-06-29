@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion hsp_compile_sdk
+    defaultConfig {
+        applicationId "net.sarangnamu.nvapp"
+        minSdkVersion hsp_min_sdk
+        targetSdkVersion hsp_target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // ANDROID LIBS
+
+    implementation "com.android.support:appcompat-v7:$support_lib"
+    implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "com.android.support:design:$support_lib"
+    implementation "com.android.support:multidex:1.0.3"
+    implementation "android.arch.lifecycle:extensions:$arch"
+    annotationProcessor "android.arch.lifecycle:compiler:$arch"
+
+    // OPEN LIBS
+
+    implementation "org.slf4j:slf4j-api:$slf4j"
+    implementation "com.github.tony19:logback-android:$logback"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.picasso:picasso:$picasso"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+
+    // LOCAL LIBS
+
+    implementation project(":widget")
+}
