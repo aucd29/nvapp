@@ -1,0 +1,17 @@
+<!--
+  ~ Copyright (C) Hanwha System Corp. 2018. All rights reserved.
+  ~
+  ~ This software is covered by the license agreement between
+  ~ the end user and Hanwha System Corp. and may be
+  ~ used and copied only in accordance with the terms of the
+  ~ said agreement.
+  ~
+  ~ Hanwha System Corp. assumes no responsibility or
+  ~ liability for any errors or inaccuracies in this software,
+  ~ or any consequential, incidental or indirect damage arising
+  ~ out of the use of the software.
+  -->
+
+<resources>
+    <string name="app_name">libhsp-adapter</string>
+</resources>

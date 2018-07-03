@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion hsp_compile_sdk
@@ -16,6 +17,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+
+        exclude "lib/mips/librealm-jni.so"
+        exclude "lib/armeabi/librealm-jni.so"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -52,4 +73,5 @@ dependencies {
     // LOCAL LIBS
 
     implementation project(":widget")
+    implementation project(path: ':libhsp-adapter')
 }

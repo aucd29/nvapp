@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">NvApp</string>
+
+    <!-- NAVIGATION -->
+
+    <string name="nav_pls_login">로그인하세요</string>
+    <string name="nav_encouraging_login" formatted="false"><font color="orange">로그인</font>하고 알림, 메일등 ~~</string>
+    <string name="nav_reset">초기화</string>
+    <string name="nav_orderby">순서</string>
+    <string name="nav_all_services">전체 서비스 &gt;</string>
+
+    <string name="nav_pay">너네페이</string>
+    <string name="nav_start_pay">시작하기 &gt;</string>
+    <string name="nav_pay_description">페이 블라 블라</string>
+    
+    <string name="nav_login">로그인</string>
+    <string name="nav_notice">공지사항</string>
+
+    <string name="nav_grid_mail">메일</string>
+    <string name="nav_grid_facing">쪽지</string>
+    <string name="nav_grid_bookmark">북마크</string>
+    <string name="nav_grid_talk">톡톡</string>
+    <string name="nav_grid_list">리스트</string>
+    <string name="nav_grid_cafe">카페</string>
+    <string name="nav_grid_blog">블로그</string>
+    <string name="nav_grid_knowledge">지식IN</string>
+    <string name="nav_grid_shopping">너네쇼핑</string>
+    <string name="nav_grid_webtoon">웹툰</string>
+    <string name="nav_grid_lab">너네랩</string>
+
 </resources>

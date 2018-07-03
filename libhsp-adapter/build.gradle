@@ -1,0 +1,86 @@
+/*
+ * Copyright (C) Hanwha System Corp. 2018. All rights reserved.
+ *
+ * This software is covered by the license agreement between
+ * the end user and Hanwha System Corp. and may be
+ * used and copied only in accordance with the terms of the
+ * said agreement.
+ *
+ * Hanwha System Corp. assumes no responsibility or
+ * liability for any errors or inaccuracies in this software,
+ * or any consequential, incidental or indirect damage arising
+ * out of the use of the software.
+ */
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation "com.android.support:appcompat-v7:$support_lib"
+    implementation "com.android.support:design:$support_lib"
+    implementation "com.android.support:recyclerview-v7:$support_lib"
+    implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "android.arch.lifecycle:extensions:$arch"
+    annotationProcessor "android.arch.lifecycle:compiler:$arch"
+
+    implementation "org.slf4j:slf4j-api:$slf4j"
+    implementation "com.github.tony19:logback-android:$logback"
+    implementation "com.squareup.picasso:picasso:$picasso"
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
