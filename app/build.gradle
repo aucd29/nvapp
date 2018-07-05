@@ -72,6 +72,6 @@ dependencies {
 
     // LOCAL LIBS
 
-    implementation project(":widget")
     implementation project(path: ':libhsp-adapter')
+    implementation project(path: ':libdingbat')
 }

@@ -15,10 +15,15 @@
 
 package com.hanwha.libhsp_adapter.arch.bindingadapter;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.hanwha.libhsp_adapter.arch.adapter.HspAdapter;
@@ -49,5 +54,47 @@ public class RecyclerBindingAdapter {
         }
 
         hspadapter.setItems(recycler, items);
+    }
+
+    @BindingAdapter({"bindHorDecoration", "bindVerDecoration"})
+    public static void bindDecorator(@NonNull RecyclerView recycler, int horDrawable, int verDrawable) {
+        //https://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
+
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("BIND DECORATION: hor(" + horDrawable + "), ver(" + verDrawable + ")");
+        }
+
+        final Context context = recycler.getContext();
+
+        if (horDrawable > 0) {
+            DividerItemDecoration hdecorator = new DividerItemDecoration(
+                context, DividerItemDecoration.HORIZONTAL);
+            hdecorator.setDrawable(ContextCompat.getDrawable(context, horDrawable));
+
+            recycler.addItemDecoration(hdecorator);
+        }
+
+        if (verDrawable > 0) {
+            DividerItemDecoration vdecorator = new DividerItemDecoration(
+                context, DividerItemDecoration.VERTICAL);
+            vdecorator.setDrawable(ContextCompat.getDrawable(context, verDrawable));
+
+            recycler.addItemDecoration(vdecorator);
+        }
+    }
+
+    @BindingAdapter("bindLockedGridLayoutManager")
+    public static void bindLockedGridLayoutManager(@NonNull RecyclerView recycler, int spancount) {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("BIND GRID LAYOUT: SPAN COUNT(" + spancount + ")");
+        }
+
+        final Context context = recycler.getContext();
+
+        recycler.setLayoutManager(new GridLayoutManager(context, spancount) {
+            @Override public boolean canScrollVertically() { return false; }
+        });
+
+        ViewCompat.setNestedScrollingEnabled(recycler, false);
     }
 }

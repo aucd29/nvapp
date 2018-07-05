@@ -14,14 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="25dp"
-        android:paddingBottom="25dp">
+        android:paddingBottom="25dp"
+        >
 
-        <android.support.v7.widget.AppCompatImageView
+        <net.sarangnamu.libdingbat.widget.AwesomeSolid
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@{item.icon}"
-            tools:src="@drawable/ic_android_black_24dp"
+            android:textSize="27sp"
+            tools:text="@string/fa_address_book"
+            android:text="@{item.icon}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +44,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             />
+
+        <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+            <!--android:id="@+id/new_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="7sp"-->
+            <!--tools:text="@string/fa_eye"-->
+            <!--android:textColor="@color/colorAccent"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/icon"-->
+            <!--app:layout_constraintEnd_toEndOf="@+id/icon"-->
+            <!--/>-->
 
     </android.support.constraint.ConstraintLayout>
 </layout>

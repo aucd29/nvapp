@@ -1,1 +1,1 @@
-include ':app', ':libhsp-adapter', ':widget'
+include ':app', ':libhsp-adapter', ':widget', ':libdingbat'

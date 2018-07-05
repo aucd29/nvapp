@@ -14,7 +14,7 @@ public class NavServiceRealm extends RealmObject {
 
     public NavServiceRealm() {}
 
-    public NavServiceRealm(@DrawableRes int icon, @StringRes int label) {
+    public NavServiceRealm(@StringRes int icon, @StringRes int label) {
         this.icon  = icon;
         this.label = label;
     }

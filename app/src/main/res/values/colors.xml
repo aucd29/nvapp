@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff6f00</color>
-    <color name="colorPrimaryDark">#c75700</color>
+    <color name="colorPrimaryDark">#ed7314</color>
     <color name="colorAccent">#ff5500</color>
+
+    <!-- MAIN NAVIGATION -->
+
+    <color name="nav_divider">#dedede</color>
+
 </resources>

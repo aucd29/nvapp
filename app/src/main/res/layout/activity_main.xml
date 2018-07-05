@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <net.sarangnamu.widget.FullScreenDrawerLayout
+    <net.sarangnamu.common.widget.FullScreenDrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,5 +32,5 @@
 
         </android.support.design.widget.NavigationView>
 
-    </net.sarangnamu.widget.FullScreenDrawerLayout>
+    </net.sarangnamu.common.widget.FullScreenDrawerLayout>
 </layout>

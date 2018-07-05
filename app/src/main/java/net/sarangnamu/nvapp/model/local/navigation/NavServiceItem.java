@@ -22,6 +22,11 @@ public class NavServiceItem implements IHspDiff {
         this.label = m.label;
     }
 
+    public NavServiceItem(@StringRes int icon, @StringRes int label) {
+        this.icon  = icon;
+        this.label = label;
+    }
+
     @Override
     public boolean compare(Object item) {
         NavServiceItem newItem = (NavServiceItem) item;

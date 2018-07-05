@@ -16,18 +16,18 @@ import io.realm.RealmConfiguration;
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 3. <p/>
  */
-public class Model {
-    private static Model mInst;
+public class DataManager {
+    private static DataManager mInst;
 
-    public static Model get() {
+    public static DataManager get() {
         if (mInst == null) {
-            mInst = new Model();
+            mInst = new DataManager();
         }
 
         return mInst;
     }
 
-    private Model() {
+    private DataManager() {
         Realm.init(MainApp.context);
         Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
         .initialData(m -> {
@@ -42,16 +42,16 @@ public class Model {
 
     private void initNavGrid(Realm m) {
         List<NavServiceRealm> dataList = new ArrayList<>();
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_mail));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_facing));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_bookmark));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_talk));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_cafe));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_blog));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_knowledge));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_shopping));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_webtoon));
-        dataList.add(new NavServiceRealm(R.drawable.ic_android_black_24dp, R.string.nav_grid_lab));
+        dataList.add(new NavServiceRealm(R.string.fa_envelope, R.string.nav_grid_mail));
+        dataList.add(new NavServiceRealm(R.string.fa_sticky_note, R.string.nav_grid_facing));
+        dataList.add(new NavServiceRealm(R.string.fa_bookmark, R.string.nav_grid_bookmark));
+        dataList.add(new NavServiceRealm(R.string.fa_comment_dots, R.string.nav_grid_talk));
+        dataList.add(new NavServiceRealm(R.string.fa_coffee, R.string.nav_grid_cafe));
+        dataList.add(new NavServiceRealm(R.string.fa_cube, R.string.nav_grid_blog));
+        dataList.add(new NavServiceRealm(R.string.fa_store, R.string.nav_grid_knowledge));
+        dataList.add(new NavServiceRealm(R.string.fa_shopping_bag, R.string.nav_grid_shopping));
+        dataList.add(new NavServiceRealm(R.string.fa_won_sign, R.string.nav_grid_webtoon));
+        dataList.add(new NavServiceRealm(R.string.fa_bug, R.string.nav_grid_lab));
 
         m.insertOrUpdate(dataList);
     }

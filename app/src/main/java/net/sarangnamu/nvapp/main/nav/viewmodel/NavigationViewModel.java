@@ -12,7 +12,7 @@ import android.view.View;
 import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
 import net.sarangnamu.nvapp.R;
-import net.sarangnamu.nvapp.model.Model;
+import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.local.navigation.NavServiceItem;
 
 import org.slf4j.Logger;
@@ -31,11 +31,16 @@ public class NavigationViewModel extends RecyclerViewModel<NavServiceItem> {
     public ObservableInt userEmailVisible = new ObservableInt(View.GONE);
     public ObservableField<Spanned> encouragingLogin = new ObservableField<>();
 
+    public ObservableInt horDecoration    = new ObservableInt(R.drawable.shape_divider_hor);
+    public ObservableInt verDecoration    = new ObservableInt(R.drawable.shape_divider_ver);
+    public ObservableInt spanCount        = new ObservableInt(4);
+
+
     public NavigationViewModel(Application app) {
         super(app);
 
         encouragingLogin();
-        setItems(Model.get().navGridList());
+        setItems(DataManager.get().navGridList());
         initAdapter("nav_grid_item");
     }
 
