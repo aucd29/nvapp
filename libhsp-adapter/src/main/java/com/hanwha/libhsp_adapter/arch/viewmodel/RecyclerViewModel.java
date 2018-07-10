@@ -22,6 +22,7 @@ import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 
 import com.hanwha.libhsp_adapter.arch.adapter.HspAdapter;
@@ -57,5 +58,9 @@ public abstract class RecyclerViewModel<T> extends AndroidViewModel {
     public void setItems(List<T> items) {
         this.items.clear();
         this.items.addAll(items);
+    }
+
+    protected String string(@StringRes int resid) {
+        return getApplication().getString(resid);
     }
 }

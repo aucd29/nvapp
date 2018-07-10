@@ -4,7 +4,7 @@
     <!-- NAVIGATION -->
 
     <string name="nav_pls_login">로그인하세요</string>
-    <string name="nav_encouraging_login"><![CDATA[<font color="orange">로그인</font>하고 알림, 메일등 ~~]]></string>
+    <string name="nav_encouraging_login"><![CDATA[<font color="#ff6f00">로그인</font>하고 알림, 메일등 ~~]]></string>
     <string name="nav_reset">초기화</string>
     <string name="nav_orderby">순서</string>
     <string name="nav_all_services">전체 서비스 &gt;</string>

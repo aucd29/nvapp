@@ -18,6 +18,8 @@ import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.viewmodel.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding mRoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,14 +30,24 @@ public class MainActivity extends AppCompatActivity {
         nav.init(this);
         user.init();
 
-        ActivityMainBinding bd = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        bd.navMain.setVmodel(nav);
-        bd.navMain.setUser(user);
+        mRoot = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mRoot.navMain.setVmodel(nav);
+        mRoot.navMain.setUser(user);
 
         // TEST CODE https://stackoverflow.com/questions/32583169/how-to-show-hide-navigation-drawer-programmatically
-        bd.drawerLayout.post(() -> {
-            bd.drawerLayout.openDrawer(Gravity.START);
+        mRoot.drawerLayout.post(() -> {
+            mRoot.drawerLayout.openDrawer(Gravity.START);
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mRoot.drawerLayout.isDrawerOpen(Gravity.START)) {
+            mRoot.drawerLayout.closeDrawer(Gravity.START);
+            return ;
+        }
+
+        super.onBackPressed();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class DataManager {
             mLog.debug("INIT DATA MANAGER");
         }
 
-        mDb = Room.databaseBuilder(MainApp.context, NvAppRoom.class, "nvapp.rxdb")
+        mDb = Room.databaseBuilder(MainApp.context, NvAppRoom.class, "nvapp.db")
             .addCallback(new RoomDatabase.Callback() {
                 @Override
                 public void onCreate(@NonNull SupportSQLiteDatabase db) {

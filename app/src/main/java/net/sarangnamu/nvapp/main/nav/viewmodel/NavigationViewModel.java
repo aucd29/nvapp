@@ -20,6 +20,8 @@ import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 6. 29. <p/>
@@ -44,8 +46,17 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     }
 
     public void init(@NonNull LifecycleOwner owner) {
-        DataManager.get().db().navigation().list().observe(owner, this::setItems);
-        initAdapter("nav_grid_item");
+        DataManager.get().db().navigation().list().observe(owner, it -> {
+            if (mLog.isDebugEnabled()) {
+                mLog.debug("NAVIGATION ITEM COUNT : " + it.size());
+            }
+
+            ArrayList<NavigationItem> list = new ArrayList<>(it);
+            list.add(new NavigationItem(NavigationItem.T_PLUS)); // 마지막에 add 버튼을 추가
+
+            setItems(list);
+        });
+        initAdapter(new String[] {"nav_grid_item", "nav_grid_plus"});
     }
 
     public void close() {
@@ -110,7 +121,20 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         if (mLog.isDebugEnabled()) {
             mLog.debug("NOTICE");
         }
+    }
 
+    public void clickService(int labelId) {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("CLICK SERVICE : " + string(labelId));
+        }
+        
+    }
+    
+    public void clickAddService() {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("ADD SERVICE");
+        }
+        
     }
 
     private void encouragingLogin() {
@@ -124,9 +148,5 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         }
 
         encouragingLogin.set(html);
-    }
-
-    private String string(@StringRes int resid) {
-        return getApplication().getString(resid);
     }
 }
