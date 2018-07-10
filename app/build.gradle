@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
+//apply plugin: 'realm-android'
 
 android {
     compileSdkVersion hsp_compile_sdk
@@ -28,8 +28,8 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
 
-        exclude "lib/mips/librealm-jni.so"
-        exclude "lib/armeabi/librealm-jni.so"
+//        exclude "lib/mips/librealm-jni.so"
+//        exclude "lib/armeabi/librealm-jni.so"
     }
 
     compileOptions {
@@ -54,6 +54,10 @@ dependencies {
     implementation "com.android.support:multidex:1.0.3"
     implementation "android.arch.lifecycle:extensions:$arch"
     annotationProcessor "android.arch.lifecycle:compiler:$arch"
+    implementation "android.arch.persistence.room:runtime:$room"
+    annotationProcessor "android.arch.persistence.room:compiler:$room"
+    androidTestImplementation "android.arch.persistence.room:testing:$room"
+
 
     // OPEN LIBS
 
@@ -64,6 +68,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:$jackson"
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

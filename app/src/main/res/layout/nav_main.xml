@@ -195,11 +195,11 @@
                 android:padding="10dp"
                 >
 
-                <ImageView
+                <net.sarangnamu.libdingbat.widget.AwesomeSolid
                     android:id="@+id/ic_reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_android_black_24dp"
+                    android:text="@string/fa_redo_alt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -216,12 +216,12 @@
                     android:onClick="@{() -> vmodel.gridReset()}"
                     tools:text="RESET" />
 
-                <ImageView
+                <net.sarangnamu.libdingbat.widget.AwesomeSolid
                     android:id="@+id/ic_orderby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/ic_android_black_24dp"
+                    android:text="@string/fa_sync_alt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/grid_reset"
                     app:layout_constraintTop_toTopOf="parent" />

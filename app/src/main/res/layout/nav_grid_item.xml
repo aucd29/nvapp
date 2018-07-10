@@ -7,7 +7,7 @@
     <data>
         <variable
             name="item"
-            type="net.sarangnamu.nvapp.model.local.navigation.NavServiceItem" />
+            type="net.sarangnamu.nvapp.model.room.navigation.NavigationItem" />
     </data>
 
     <android.support.constraint.ConstraintLayout

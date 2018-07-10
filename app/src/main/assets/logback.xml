@@ -1,6 +1,6 @@
 <configuration>
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
-        <tagEncoder><pattern>[SAM]</pattern></tagEncoder>
+        <tagEncoder><pattern>[BK]</pattern></tagEncoder>
         <encoder><pattern>%class{0}.%M\(%F:%L\) %msg</pattern></encoder>
     </appender>
 

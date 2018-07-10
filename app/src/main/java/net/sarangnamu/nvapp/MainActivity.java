@@ -14,6 +14,7 @@ import android.view.Gravity;
 
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.main.nav.viewmodel.NavigationViewModel;
+import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.viewmodel.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationViewModel nav = ViewModelProviders.of(this).get(NavigationViewModel.class);
         UserInfoViewModel user  = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+
+        nav.init(this);
         user.init();
 
         ActivityMainBinding bd = DataBindingUtil.setContentView(this, R.layout.activity_main);
-//        initNav(bd);
-
         bd.navMain.setVmodel(nav);
         bd.navMain.setUser(user);
 
@@ -37,24 +38,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void initNav(@NonNull ActivityMainBinding bd) {
-//        final Context context = MainActivity.this;
-//
-//        GridLayoutManager manager = new GridLayoutManager(context, 4) {
-//            @Override public boolean canScrollVertically() { return false; }
-//        };
-//
-//        bd.navMain.grid.setLayoutManager(manager);
-//
-//        DividerItemDecoration hdecorator = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
-//        hdecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.shape_divider_hor));
-//
-//        DividerItemDecoration vdecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-//        vdecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.shape_divider_ver));
-//
-//        bd.navMain.grid.addItemDecoration(hdecorator);
-//        bd.navMain.grid.addItemDecoration(vdecorator);
-//
-//        ViewCompat.setNestedScrollingEnabled(bd.navMain.grid, false);
-//    }
+    @Override
+    protected void onDestroy() {
+        DataManager.get().destroy();
+
+        super.onDestroy();
+    }
 }

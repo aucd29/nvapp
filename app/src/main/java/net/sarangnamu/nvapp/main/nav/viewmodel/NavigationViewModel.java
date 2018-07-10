@@ -1,9 +1,11 @@
 package net.sarangnamu.nvapp.main.nav.viewmodel;
 
 import android.app.Application;
+import android.arch.lifecycle.LifecycleOwner;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spanned;
@@ -13,7 +15,7 @@ import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.model.DataManager;
-import net.sarangnamu.nvapp.model.local.navigation.NavServiceItem;
+import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 6. 29. <p/>
  */
-public class NavigationViewModel extends RecyclerViewModel<NavServiceItem> {
+public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     private static final Logger mLog = LoggerFactory.getLogger(NavigationViewModel.class);
     
     public ObservableInt loginMsg         = new ObservableInt(R.string.nav_pls_login);
@@ -35,12 +37,14 @@ public class NavigationViewModel extends RecyclerViewModel<NavServiceItem> {
     public ObservableInt verDecoration    = new ObservableInt(R.drawable.shape_divider_ver);
     public ObservableInt spanCount        = new ObservableInt(4);
 
-
     public NavigationViewModel(Application app) {
         super(app);
 
         encouragingLogin();
-        setItems(DataManager.get().navGridList());
+    }
+
+    public void init(@NonNull LifecycleOwner owner) {
+        DataManager.get().db().navigation().list().observe(owner, this::setItems);
         initAdapter("nav_grid_item");
     }
 
