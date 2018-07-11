@@ -5,17 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <net.sarangnamu.common.widget.FullScreenDrawerLayout
+    <net.sarangnamu.common.widget.LockedDrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:openDrawer="start">
 
-        <include
+        <android.support.design.widget.CoordinatorLayout
             android:id="@+id/layout_main"
-            layout="@layout/layout_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:context=".MainActivity"/>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
@@ -32,5 +32,5 @@
 
         </android.support.design.widget.NavigationView>
 
-    </net.sarangnamu.common.widget.FullScreenDrawerLayout>
+    </net.sarangnamu.common.widget.LockedDrawerLayout>
 </layout>

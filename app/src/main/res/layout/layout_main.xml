@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vmodel"
+            type="net.sarangnamu.nvapp.main.viewmodel.MainViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_web"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/content_main" />
+        <WebView
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:bindUrl="@{vmodel.url}"
+            app:bindClient="@{vmodel.webviewClient}"
+            app:bindChrome="@{vmodel.webviewChromeClient}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
-    </android.support.design.widget.CoordinatorLayout>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            >
+
+            <net.sarangnamu.libdingbat.widget.AwesomeSolid
+                android:id="@+id/menu_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/fa_address_book"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
 </layout>

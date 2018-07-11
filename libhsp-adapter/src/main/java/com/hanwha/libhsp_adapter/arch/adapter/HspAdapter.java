@@ -67,8 +67,8 @@ public class HspAdapter<ITEM> extends RecyclerView.Adapter<HspViewHolder> {
         int layoutId    = context.getResources().getIdentifier(mLayouts[viewType], "layout", context.getPackageName());
         View view       = LayoutInflater.from(context).inflate(layoutId, parent, false);
 
-        if (mLog.isDebugEnabled()) {
-            mLog.debug(String.format(Locale.getDefault(), "LAYOUT ID : %s (%d)", mLayouts[viewType], layoutId));
+        if (mLog.isTraceEnabled()) {
+            mLog.trace(String.format(Locale.getDefault(), "LAYOUT ID : %s (%d)", mLayouts[viewType], layoutId));
         }
 
         // view binding class 는 file name 에 의해 생성되므로 hsp adapter 의 생성자에서 전달 받은 파일명을
