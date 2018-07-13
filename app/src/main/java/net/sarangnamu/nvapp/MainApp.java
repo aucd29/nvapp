@@ -29,6 +29,10 @@ public class MainApp extends Application {
 
         super.onCreate();
 
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("APPLICATION START");
+        }
+
         // 디비 초기화
         DataManager.get().init(this);
 

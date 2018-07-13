@@ -80,6 +80,10 @@ public class DataManager {
     }
 
     public NvAppRoom db() {
+        if (mDb == null) {
+
+        }
+
         return mDb;
     }
 
@@ -102,7 +106,5 @@ public class DataManager {
     public void destroy() {
         mDisposable.clear();
         mDisposable.dispose();
-
-        mInst = null;
     }
 }
