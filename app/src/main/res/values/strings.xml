@@ -28,4 +28,7 @@
     <string name="nav_grid_webtoon">웹툰</string>
     <string name="nav_grid_lab">너네랩</string>
 
+    <!-- TUTORIAL -->
+    <string name="tutorial_1_big_title">어쩌고 저쩌고</string>
+    <string name="tutorial_1_title">이러쿵 저러쿵</string>
 </resources>

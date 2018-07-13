@@ -4,6 +4,7 @@ package net.sarangnamu.nvapp.model;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import net.sarangnamu.nvapp.MainApp;
@@ -44,18 +45,16 @@ public class DataManager {
     }
 
     private DataManager() {
+
+    }
+
+    public void init(@NonNull Context context) {
         if (mLog.isDebugEnabled()) {
             mLog.debug("INIT DATA MANAGER");
         }
 
-        init();
-        // https://stackoverflow.com/questions/47619718/room-database-not-created
-        mDisposable.add(rxdb().subscribe(db -> db.navigation().count()));
-    }
-
-    private void init() {
         if (mDb == null) {
-            mDb = Room.databaseBuilder(MainApp.context, NvAppRoom.class, "nvapp.db")
+            mDb = Room.databaseBuilder(context, NvAppRoom.class, "nvapp.db")
                 .addCallback(new RoomDatabase.Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -70,17 +69,17 @@ public class DataManager {
                     }
                 })
                 .build();
+
+            // https://stackoverflow.com/questions/47619718/room-database-not-created
+            mDisposable.add(rxdb().subscribe(db -> db.navigation().count()));
         }
     }
 
     public Single<NvAppRoom> rxdb() {
-        init();
         return Single.just(mDb).subscribeOn(Schedulers.io());
     }
 
     public NvAppRoom db() {
-        init();
-
         return mDb;
     }
 
@@ -103,5 +102,7 @@ public class DataManager {
     public void destroy() {
         mDisposable.clear();
         mDisposable.dispose();
+
+        mInst = null;
     }
 }

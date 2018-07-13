@@ -8,34 +8,146 @@
         <variable
             name="vmodel"
             type="net.sarangnamu.libtutorial.viewmodel.TutorialViewModel" />
+        <variable
+            name="nvmodel"
+            type="net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel" />
     </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TUTORIAL 0"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="273dp"
+            android:src="@drawable/ic_android_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.15"
+            app:bindFadeIn="@{nvmodel.logoFade}"
             />
 
-        <Button
-            android:id="@+id/button"
+        <TextView
+            android:id="@+id/big_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="483dp"
-            android:onClick="@{() -> vmodel.next()}"
-            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.25"
+            android:text="@string/tutorial_1_big_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:bindFadeIn="@{nvmodel.titleFade}"
+            app:bindTransitionY="@{nvmodel.titleTransition}"
             />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutorial_1_title"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/big_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:bindFadeIn="@{nvmodel.titleFade}"
+            app:bindTransitionY="@{nvmodel.titleTransition}"
+            />
+
+        <!-- LEFT -->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#a6a6a6"
+            app:bindStartCellStartAnimation="@{nvmodel.phoneFrameFade}"
+            android:visibility="invisible"
+            />
+
+        <!-- CENTER -->
+
+        <View
+            android:id="@+id/scroll_content"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#a6a6a6"
+            app:bindFadeIn="@{nvmodel.phoneFrameFade}"
+            app:bindTransitionY="@{nvmodel.phoneFrameTransition}"
+            />
+
+        <!-- RIGHT -->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#a6a6a6"
+            app:bindEndCellStartAnimation="@{nvmodel.phoneFrameFade}"
+            android:visibility="invisible"
+            />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/phone_frame"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/shape_tutorial_phone_frame"
+            app:bindFadeIn="@{nvmodel.phoneFrameFade}"
+            app:bindTransitionY="@{nvmodel.phoneFrameTransition}"
+            >
+
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- buttons -->
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="20dp"
+            android:background="@android:color/white"
+            android:elevation="1dp"
+            app:bindDelayTransitionY="@{null}"
+            >
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:onClick="@{() -> nvmodel.login()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:onClick="@{() -> vmodel.next()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

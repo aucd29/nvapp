@@ -8,6 +8,9 @@
         <variable
             name="vmodel"
             type="net.sarangnamu.libtutorial.viewmodel.TutorialViewModel" />
+        <variable
+            name="anim"
+            type="net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel" />
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

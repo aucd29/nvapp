@@ -1,15 +1,11 @@
 package net.sarangnamu.nvapp;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-import net.sarangnamu.nvapp.viewmodel.SplashViewModel;
+import net.sarangnamu.common.widget.BaseActivity;
+import net.sarangnamu.nvapp.databinding.SplashMainBinding;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,48 +13,27 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 11. <p/>
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity<SplashMainBinding> {
     private static final Logger mLog = LoggerFactory.getLogger(SplashActivity.class);
 
-    public static final String FINISH = MainApp.context.getPackageName() + ".bk_activity_finish";
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (mLog.isDebugEnabled()) {
-                mLog.debug("RECEIVED ACTION : " + action);
-            }
-
-            if (FINISH.equals(action)) {
-                finish();
-            }
-        }
-    };
+    public static final int SPLASH_ACTION_ID = 1230;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        overridePendingTransition(0, 0);
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_main);
 
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("REGISTER INTENT FILTER : " + FINISH);
-        }
+        overridePendingTransition(0, 0);
+        initBinding();
 
-        registerReceiver(mReceiver, new IntentFilter(FINISH));
+        // TODO 서버에서 데이터를 전달 받아야할 작업들은 이곳에서 진행 한다.
+
+        // SPLASH 최소 시간은 현재 1초
+        findViewById(R.id.splash).postDelayed(this::finish, 1000);
     }
 
     @Override
-    protected void onDestroy() {
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("UNREGISTER INTENT FILTER : " + FINISH);
-        }
-
-        unregisterReceiver(mReceiver);
-        super.onDestroy();
+    protected int layoutId() {
+        return R.layout.splash_main;
     }
 
     @Override

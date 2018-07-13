@@ -1,5 +1,6 @@
 package net.sarangnamu.nvapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Point;
@@ -19,8 +20,6 @@ import java.io.PrintStream;
 public class MainApp extends Application {
     private static final Logger mLog = LoggerFactory.getLogger(MainApp.class);
 
-    public static Context context;
-
     public static int screenX;
     public static int screenY;
 
@@ -29,9 +28,11 @@ public class MainApp extends Application {
         crashWatchDog();
 
         super.onCreate();
-        context = this;
 
-        DataManager.get();
+        // 디비 초기화
+        DataManager.get().init(this);
+
+        // 화면 크기 설정
         screenSize();
     }
 

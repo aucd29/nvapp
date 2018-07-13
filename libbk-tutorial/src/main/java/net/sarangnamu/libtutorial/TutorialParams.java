@@ -25,13 +25,6 @@ public final class TutorialParams implements Serializable {
         this.viewDataBindingListener = builder.viewDataBindingListener;
     }
 
-    public Bundle bundle() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(TutorialFragment.PARAMS, this);
-
-        return bundle;
-    }
-
     public static Builder builder() {
         return new Builder();
     }

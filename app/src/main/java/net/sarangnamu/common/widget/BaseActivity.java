@@ -17,11 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     protected T mBinding;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     protected void initBinding() {
         mBinding = DataBindingUtil.setContentView(this, layoutId());
     }

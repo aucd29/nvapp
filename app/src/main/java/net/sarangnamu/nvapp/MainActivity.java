@@ -2,9 +2,11 @@ package net.sarangnamu.nvapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
+import net.sarangnamu.common.util.Invoke;
 import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.TimeLoger;
 import net.sarangnamu.libfragment.FragmentParams;
@@ -15,6 +17,7 @@ import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.view.MainFragment;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
 import net.sarangnamu.nvapp.model.DataManager;
+import net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel;
 import net.sarangnamu.nvapp.viewmodel.UserInfoViewModel;
 
 import org.slf4j.Logger;
@@ -75,29 +78,39 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // SPLASH
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
     private void loadSplash() {
         if (mLog.isDebugEnabled()) {
             mLog.debug("SPLASH START");
         }
 
         Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SplashActivity.SPLASH_ACTION_ID);
     }
 
-    private void closeSplash() {
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("SPLASH END");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case SplashActivity.SPLASH_ACTION_ID:
+                loadTutorial();
+                break;
         }
-
-        // 임시 코드 splash activity 초기화 보다 close 가 먼저들어와서 일단 임시로
-        // 코드에 delay 줌
-
-        mBinding.drawerLayout.postDelayed(() -> {
-            sendBroadcast(new Intent(SplashActivity.FINISH).setPackage(getPackageName()));
-        }, 2000);
     }
 
-    private void matchParentNaviationView() {
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // FRAGMENTS
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    private void matchParentNavigationView() {
         DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mBinding.navView.getLayoutParams();
 
         lp.width = MainApp.screenX;
@@ -107,7 +120,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private void initNavigation() {
         final TimeLoger.TimeLog log = TimeLoger.start("NAVIGATION");
 
-        matchParentNaviationView();
+        matchParentNavigationView();
         mDisposable.add(Observable.just(viewModel(NavigationViewModel.class))
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
@@ -138,12 +151,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private void loadFragments() {
         synchronized (mCounter) {
             if (++mCounter > 1) {
-                runOnUiThread(() -> {
-                    loadMain();
-                    loadTutorial();
-
-                    closeSplash();
-                });
+                runOnUiThread(this::loadMain);
             }
         }
     }
@@ -159,6 +167,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     private void loadTutorial() {
         TutorialViewModel vmodel = viewModel(TutorialViewModel.class);
+        NvAppTutorialViewModel nvmodel = viewModel(NvAppTutorialViewModel.class);
         if (vmodel.isFinished()) {
             return ;
         }
@@ -170,11 +179,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         vmodel.params = TutorialParams.builder()
             .view(R.layout.tutorial_0)
             .view(R.layout.tutorial_1)
-            .viewDataBindingListener((res, viewDataBindingListener) -> {
+            .viewDataBindingListener((res, viewDataBinding) -> {
                 if (mLog.isDebugEnabled()) {
                     mLog.debug("RECEIVED viewDataBindingListener");
                 }
 
+                Invoke.method(viewDataBinding, "setNvmodel", nvmodel);
             })
             .finishedListener((result, obj) -> ViewManager.get().popBack())
             .build();
