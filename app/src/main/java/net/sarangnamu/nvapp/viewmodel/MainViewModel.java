@@ -1,4 +1,4 @@
-package net.sarangnamu.nvapp.main.viewmodel;
+package net.sarangnamu.nvapp.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

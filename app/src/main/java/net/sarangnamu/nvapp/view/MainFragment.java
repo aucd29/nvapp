@@ -1,4 +1,4 @@
-package net.sarangnamu.nvapp.main;
+package net.sarangnamu.nvapp.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import net.sarangnamu.libfragment.BaseFragment;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.databinding.LayoutMainBinding;
-import net.sarangnamu.nvapp.main.viewmodel.MainViewModel;
+import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

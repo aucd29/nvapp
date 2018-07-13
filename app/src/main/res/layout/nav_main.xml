@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vmodel"
-            type="net.sarangnamu.nvapp.main.viewmodel.NavigationViewModel" />
+            type="net.sarangnamu.nvapp.viewmodel.NavigationViewModel" />
 
         <variable
             name="user"
@@ -22,415 +22,416 @@
         <!--android:fillViewport="true"-->
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/nav_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/login_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:padding="20dp">
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:id="@+id/login_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:padding="20dp">-->
 
-                <ImageView
-                    android:id="@+id/user_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@{user.info.pic}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_android_black_24dp" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/user_image"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:src="@{user.info.pic}"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--tools:src="@drawable/ic_android_black_24dp" />-->
 
-                <!-- 로그인 전 -->
-                <TextView
-                    android:id="@+id/login_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@{vmodel.loginMsg}"
-                    android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.loginMsgVisible}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/user_image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="login message"
-                    tools:visibility="gone" />
+                <!--&lt;!&ndash; 로그인 전 &ndash;&gt;-->
+                <!--<TextView-->
+                    <!--android:id="@+id/login_msg"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@{vmodel.loginMsg}"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:visibility="@{vmodel.loginMsgVisible}"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/user_image"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--tools:text="login message"-->
+                    <!--tools:visibility="gone" />-->
 
-                <!-- 로그인 이후 -->
+                <!--&lt;!&ndash; 로그인 이후 &ndash;&gt;-->
 
-                <TextView
-                    android:id="@+id/user_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@{user.info.id}"
-                    android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.userIdVisible}"
-                    app:layout_constraintStart_toEndOf="@+id/login_msg"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.333"
-                    tools:text="userid"
-                    tools:visibility="visible" />
+                <!--<TextView-->
+                    <!--android:id="@+id/user_id"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@{user.info.id}"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:visibility="@{vmodel.userIdVisible}"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/login_msg"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintVertical_bias="0.333"-->
+                    <!--tools:text="userid"-->
+                    <!--tools:visibility="visible" />-->
 
-                <TextView
-                    android:id="@+id/user_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@{user.info.email}"
-                    android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.userEmailVisible}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/user_image"
-                    app:layout_constraintTop_toBottomOf="@+id/user_id"
-                    tools:text="test@email.net"
-                    tools:visibility="visible" />
+                <!--<TextView-->
+                    <!--android:id="@+id/user_email"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@{user.info.email}"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:visibility="@{vmodel.userEmailVisible}"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/user_image"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/user_id"-->
+                    <!--tools:text="test@email.net"-->
+                    <!--tools:visibility="visible" />-->
 
-                <!-- /로그인 이후 -->
+                <!--&lt;!&ndash; /로그인 이후 &ndash;&gt;-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:onClick="@{() -> vmodel.close()}"
-                    android:text="@string/fa_window_close"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/close"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:onClick="@{() -> vmodel.close()}"-->
+                    <!--android:text="@string/fa_window_close"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="18sp"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:onClick="@{() -> vmodel.notification()}"
-                    android:text="@string/fa_bell"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/close"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/notification"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:onClick="@{() -> vmodel.notification()}"-->
+                    <!--android:text="@string/fa_bell"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="18sp"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toStartOf="@+id/close"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:onClick="@{() -> vmodel.setting()}"
-                    android:text="@string/fa_cog"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/notification"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/setting"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="15dp"-->
+                    <!--android:onClick="@{() -> vmodel.setting()}"-->
+                    <!--android:text="@string/fa_cog"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="18sp"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toStartOf="@+id/notification"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-            </android.support.constraint.ConstraintLayout>
+            <!--</android.support.constraint.ConstraintLayout>-->
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/login_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#dedede"
-                android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/login_layout">
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:id="@+id/login_description"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#dedede"-->
+                <!--android:padding="10dp"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/login_layout">-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/ic_lock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:text="@string/fa_lock"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/ic_lock"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/colorPrimary"-->
+                    <!--android:text="@string/fa_lock"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@{vmodel.encouragingLogin}"
-                    app:layout_constraintStart_toEndOf="@+id/ic_lock"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="LOGIN BLAH~ BLAH~"
-                    />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@{vmodel.encouragingLogin}"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/ic_lock"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--tools:text="LOGIN BLAH~ BLAH~"-->
+                    <!--/>-->
 
-            </android.support.constraint.ConstraintLayout>
+            <!--</android.support.constraint.ConstraintLayout>-->
 
-            <!-- GRID -->
+            <!--&lt;!&ndash; GRID &ndash;&gt;-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_description"
-                tools:itemCount="10"
-                tools:layoutManager="android.support.v7.widget.GridLayoutManager"
-                tools:listitem="@layout/nav_grid_item"
-                tools:spanCount="4"
-                app:bindAdapter="@{vmodel.adapter}"
-                app:bindItems="@{vmodel.items}"
-                app:bindHorDecoration="@{vmodel.horDecoration}"
-                app:bindVerDecoration="@{vmodel.verDecoration}"
-                app:bindLockedGridLayoutManager="@{vmodel.spanCount}"
-                />
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/grid"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/login_description"-->
+                <!--tools:itemCount="10"-->
+                <!--tools:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                <!--tools:listitem="@layout/nav_grid_item"-->
+                <!--tools:spanCount="4"-->
+                <!--app:bindAdapter="@{vmodel.adapter}"-->
+                <!--app:bindItems="@{vmodel.items}"-->
+                <!--app:bindHorDecoration="@{vmodel.horDecoration}"-->
+                <!--app:bindVerDecoration="@{vmodel.verDecoration}"-->
+                <!--app:bindLockedGridLayoutManager="@{vmodel.spanCount}"-->
+                <!--/>-->
 
-            <!-- GRID CONTROLLER -->
+            <!--&lt;!&ndash; GRID CONTROLLER &ndash;&gt;-->
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/grid_controller"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/grid"
-                android:padding="10dp"
-                >
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:id="@+id/grid_controller"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/grid"-->
+                <!--android:padding="10dp"-->
+                <!--&gt;-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/ic_reset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fa_redo_alt"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/ic_reset"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/fa_redo_alt"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-                <TextView
-                    android:id="@+id/grid_reset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/nav_reset"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ic_reset"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.gridReset()}"
-                    tools:text="RESET" />
+                <!--<TextView-->
+                    <!--android:id="@+id/grid_reset"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@string/nav_reset"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/ic_reset"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--android:onClick="@{() -> vmodel.gridReset()}"-->
+                    <!--tools:text="RESET" />-->
 
-                <net.sarangnamu.libdingbat.widget.AwesomeSolid
-                    android:id="@+id/ic_orderby"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/fa_sync_alt"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/grid_reset"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
+                    <!--android:id="@+id/ic_orderby"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@string/fa_sync_alt"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/grid_reset"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-                <TextView
-                    android:id="@+id/orderby"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/nav_orderby"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ic_orderby"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.gridOrderBy()}"
-                    tools:text="ORDER BY" />
+                <!--<TextView-->
+                    <!--android:id="@+id/orderby"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@string/nav_orderby"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/ic_orderby"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--android:onClick="@{() -> vmodel.gridOrderBy()}"-->
+                    <!--tools:text="ORDER BY" />-->
 
-                <TextView
-                    android:id="@+id/all_services"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/nav_all_services"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.allServices()}"
-                    tools:text="ALL SERVICES" />
+                <!--<TextView-->
+                    <!--android:id="@+id/all_services"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@string/nav_all_services"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="15sp"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--android:onClick="@{() -> vmodel.allServices()}"-->
+                    <!--tools:text="ALL SERVICES" />-->
 
-            </android.support.constraint.ConstraintLayout>
+            <!--</android.support.constraint.ConstraintLayout>-->
 
-            <!-- PAY -->
+            <!--&lt;!&ndash; PAY &ndash;&gt;-->
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/pay_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="#dedede"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/grid_controller"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:id="@+id/pay_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:padding="5dp"-->
+                <!--android:background="#dedede"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/grid_controller"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--&gt;-->
 
-                <ImageView
-                    android:id="@+id/ic_pay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/ic_android_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                <!--<ImageView-->
+                    <!--android:id="@+id/ic_pay"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:src="@drawable/ic_android_black_24dp"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--/>-->
 
-                <TextView
-                    android:id="@+id/pay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/nav_pay"
-                    app:layout_constraintStart_toEndOf="@+id/ic_pay"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="PAY" />
+                <!--<TextView-->
+                    <!--android:id="@+id/pay"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="15dp"-->
+                    <!--android:text="@string/nav_pay"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/ic_pay"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--tools:text="PAY" />-->
 
-                <TextView
-                    android:id="@+id/start_pay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nav_start_pay"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textColor="@color/colorAccent"
-                    tools:text="START"
-                    android:onClick="@{() -> vmodel.startPay()}"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/start_pay"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/nav_start_pay"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--android:textColor="@color/colorAccent"-->
+                    <!--tools:text="START"-->
+                    <!--android:onClick="@{() -> vmodel.startPay()}"-->
+                    <!--/>-->
 
-                <View
-                    android:id="@+id/pay_underscore"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#dedede"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pay"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    />
+                <!--<View-->
+                    <!--android:id="@+id/pay_underscore"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#dedede"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/pay"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nav_pay_description"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pay_underscore"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="PAY blah blah~" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/nav_pay_description"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/pay_underscore"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--tools:text="PAY blah blah~" />-->
 
-            </android.support.constraint.ConstraintLayout>
+            <!--</android.support.constraint.ConstraintLayout>-->
 
-            <!-- BANNER -->
+            <!--&lt;!&ndash; BANNER &ndash;&gt;-->
 
-            <ImageView
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/ic_android_black_24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pay_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:minHeight="50dp"
-                android:onClick="@{() -> vmodel.banner()}"
-                />
+            <!--<ImageView-->
+                <!--android:id="@+id/banner"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--tools:src="@drawable/ic_android_black_24dp"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/pay_layout"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--android:minHeight="50dp"-->
+                <!--android:onClick="@{() -> vmodel.banner()}"-->
+                <!--/>-->
 
-            <!-- BUTTONS -->
+            <!--&lt;!&ndash; BUTTONS &ndash;&gt;-->
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/banner"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/banner"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--&gt;-->
 
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/login_btn_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent=".5"
-                    app:layout_constraintHorizontal_bias="1"
-                    android:background="#dedede"
-                    android:padding="10dp"
-                    android:onClick="@{() -> vmodel.login()}"
-                    >
+                <!--<android.support.constraint.ConstraintLayout-->
+                    <!--android:id="@+id/login_btn_layout"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintWidth_percent=".5"-->
+                    <!--app:layout_constraintHorizontal_bias="1"-->
+                    <!--android:background="#dedede"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:onClick="@{() -> vmodel.login()}"-->
+                    <!--&gt;-->
 
-                    <ImageView
-                        android:id="@+id/ic_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:src="@drawable/ic_android_black_24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/login"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/ic_login"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--tools:src="@drawable/ic_android_black_24dp"-->
+                        <!--app:layout_constraintStart_toStartOf="parent"-->
+                        <!--app:layout_constraintTop_toTopOf="parent"-->
+                        <!--app:layout_constraintEnd_toStartOf="@+id/login"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                        <!--/>-->
 
-                    <TextView
-                        android:id="@+id/login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nav_login"
-                        android:layout_marginStart="7dp"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toEndOf="@+id/ic_login"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        tools:text="Login" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/login"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/nav_login"-->
+                        <!--android:layout_marginStart="7dp"-->
+                        <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                        <!--app:layout_constraintStart_toEndOf="@+id/ic_login"-->
+                        <!--app:layout_constraintTop_toTopOf="parent"-->
+                        <!--app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--tools:text="Login" />-->
 
-                </android.support.constraint.ConstraintLayout>
+                <!--</android.support.constraint.ConstraintLayout>-->
 
 
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/notice_btn_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/login_btn_layout"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintWidth_percent=".5"
-                    app:layout_constraintHorizontal_bias="1"
-                    android:background="#ececec"
-                    android:padding="10dp"
-                    android:onClick="@{() -> vmodel.notice()}"
-                    >
+                <!--<android.support.constraint.ConstraintLayout-->
+                    <!--android:id="@+id/notice_btn_layout"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/login_btn_layout"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintWidth_percent=".5"-->
+                    <!--app:layout_constraintHorizontal_bias="1"-->
+                    <!--android:background="#ececec"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:onClick="@{() -> vmodel.notice()}"-->
+                    <!--&gt;-->
 
-                    <ImageView
-                        android:id="@+id/ic_notice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:src="@drawable/ic_android_black_24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/notice"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/ic_notice"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--tools:src="@drawable/ic_android_black_24dp"-->
+                        <!--app:layout_constraintStart_toStartOf="parent"-->
+                        <!--app:layout_constraintTop_toTopOf="parent"-->
+                        <!--app:layout_constraintEnd_toStartOf="@+id/notice"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                        <!--/>-->
 
-                    <TextView
-                        android:id="@+id/notice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nav_notice"
-                        android:layout_marginStart="7dp"
-                        app:layout_constraintStart_toEndOf="@+id/ic_notice"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        tools:text="Notice" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/notice"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/nav_notice"-->
+                        <!--android:layout_marginStart="7dp"-->
+                        <!--app:layout_constraintStart_toEndOf="@+id/ic_notice"-->
+                        <!--app:layout_constraintTop_toTopOf="parent"-->
+                        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                        <!--tools:text="Notice" />-->
 
-                </android.support.constraint.ConstraintLayout>
+                <!--</android.support.constraint.ConstraintLayout>-->
 
-            </android.support.constraint.ConstraintLayout>
+            <!--</android.support.constraint.ConstraintLayout>-->
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </layout>

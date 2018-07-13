@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vmodel"
-            type="net.sarangnamu.nvapp.tutorial.TutorialViewModel" />
+            type="net.sarangnamu.libtutorial.viewmodel.TutorialViewModel" />
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

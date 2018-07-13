@@ -25,6 +25,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,8 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false);
 
         return mBinding.getRoot();
@@ -47,7 +49,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     protected abstract int layoutId();
 
     protected <VM extends ViewModel> VM viewModel(@NonNull Class<VM> modelClass) {
-        return ViewModelProviders.of(this).get(modelClass);
+        return ViewModelProviders.of(getActivity()).get(modelClass);
     }
 
     protected <VB extends ViewDataBinding> VB inflate(@LayoutRes int layoutId, ViewGroup parent) {

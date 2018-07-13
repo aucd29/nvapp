@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vmodel"
-            type="net.sarangnamu.nvapp.main.viewmodel.NavigationViewModel" />
+            type="net.sarangnamu.nvapp.viewmodel.NavigationViewModel" />
         <variable
             name="item"
             type="net.sarangnamu.nvapp.model.room.navigation.NavigationItem" />

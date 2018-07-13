@@ -48,31 +48,39 @@ public class DataManager {
             mLog.debug("INIT DATA MANAGER");
         }
 
-        mDb = Room.databaseBuilder(MainApp.context, NvAppRoom.class, "nvapp.db")
-            .addCallback(new RoomDatabase.Callback() {
-                @Override
-                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                    super.onCreate(db);
-
-                    if (mLog.isDebugEnabled()) {
-                        mLog.debug("ROOM CREATE");
-                    }
-
-                    mDisposable.add(rxdb().subscribe(nvAppRoom ->
-                            nvAppRoom.navigation().prePopulate(populateNavigationData()) ));
-                }
-            })
-            .build();
-
+        init();
         // https://stackoverflow.com/questions/47619718/room-database-not-created
         mDisposable.add(rxdb().subscribe(db -> db.navigation().count()));
     }
 
+    private void init() {
+        if (mDb == null) {
+            mDb = Room.databaseBuilder(MainApp.context, NvAppRoom.class, "nvapp.db")
+                .addCallback(new RoomDatabase.Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+
+                        if (mLog.isDebugEnabled()) {
+                            mLog.debug("ROOM CREATE");
+                        }
+
+                        mDisposable.add(rxdb().subscribe(nvAppRoom ->
+                            nvAppRoom.navigation().prePopulate(populateNavigationData()) ));
+                    }
+                })
+                .build();
+        }
+    }
+
     public Single<NvAppRoom> rxdb() {
+        init();
         return Single.just(mDb).subscribeOn(Schedulers.io());
     }
 
     public NvAppRoom db() {
+        init();
+
         return mDb;
     }
 

@@ -16,16 +16,23 @@ public class SharedPref {
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
-    public SharedPref(@NonNull Context context) {
+    public static SharedPref create(@NonNull Context context) {
+        return new SharedPref(context);
+    }
+
+    public static SharedPref create(@NonNull Context context, @NonNull String fileName) {
+        return new SharedPref(context, fileName);
+    }
+
+    private SharedPref(@NonNull Context context) {
         prefs  = context.getSharedPreferences(PREF_FILE_NAME, Activity.MODE_PRIVATE);
         editor = prefs.edit();
     }
 
-    public SharedPref(@NonNull Context context, String fileName) {
+    private SharedPref(@NonNull Context context, String fileName) {
         prefs  = context.getSharedPreferences(fileName, Activity.MODE_PRIVATE);
         editor = prefs.edit();
     }
-
 
     public void set(String key, String value) {
         if (TextUtils.isEmpty(value)) {

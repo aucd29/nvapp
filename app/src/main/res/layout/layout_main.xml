@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vmodel"
-            type="net.sarangnamu.nvapp.main.viewmodel.MainViewModel" />
+            type="net.sarangnamu.nvapp.viewmodel.MainViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
