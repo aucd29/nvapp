@@ -60,6 +60,7 @@
 
         <!-- LEFT -->
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/panel_left"
             android:layout_width="300dp"
             android:layout_height="300dp"
             app:layout_constraintEnd_toStartOf="parent"
@@ -69,9 +70,8 @@
             />
 
         <!-- CENTER -->
-
         <View
-            android:id="@+id/scroll_content"
+            android:id="@+id/panel_center"
             android:layout_width="300dp"
             android:layout_height="300dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,12 +84,24 @@
 
         <!-- RIGHT -->
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/panel_right"
             android:layout_width="300dp"
             android:layout_height="300dp"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="#a6a6a6"
             app:bindEndCellStartAnimation="@{nvmodel.phoneFrameFade}"
+            />
+
+        <!-- RIGHT2 -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/panel_right2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toEndOf="@+id/panel_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="27.8dp"
+            android:background="#a6a6a6"
             />
 
         <android.support.constraint.ConstraintLayout

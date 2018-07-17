@@ -1,11 +1,16 @@
 package net.sarangnamu.nvapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
+import net.sarangnamu.common.util.DimUtils;
 import net.sarangnamu.common.util.Invoke;
 import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.TimeLoger;
@@ -14,6 +19,7 @@ import net.sarangnamu.libtutorial.TutorialFragment;
 import net.sarangnamu.libtutorial.TutorialParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
+import net.sarangnamu.nvapp.databinding.Tutorial0Binding;
 import net.sarangnamu.nvapp.view.MainFragment;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
 import net.sarangnamu.nvapp.model.DataManager;
@@ -185,11 +191,39 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 }
 
                 Invoke.method(viewDataBinding, "setNvmodel", nvmodel);
+
+                if (viewDataBinding instanceof Tutorial0Binding) {
+                    tutorial0Event((Tutorial0Binding) viewDataBinding);
+                }
             })
             .finishedListener((result, obj) -> ViewManager.get().popBack())
             .build();
 
         ViewManager.get().show(FragmentParams.builder().containerId(R.id.layout_main)
             .fragment(TutorialFragment.class).build());
+    }
+
+    private void tutorial0Event(Tutorial0Binding binding) {
+        int screenWidth  = MainApp.screenX;
+        float panelWidth = DimUtils.dpToPixel(MainActivity.this, 300);
+        float margin     = screenWidth - panelWidth;
+        float leftMargin = margin / 2f - DimUtils.dpToPixel(MainActivity.this,
+            NvAppTutorialViewModel.PANEL_MOVE_X);
+        float gap        = (panelWidth + leftMargin) * -1 ;
+        int startDelay   = 3000;
+
+        // [전체크기]
+
+        // 애니메이션 관련 작업
+        ObjectAnimator left   = ObjectAnimator.ofFloat(binding.panelLeft, "translationX", gap + leftMargin);
+        ObjectAnimator center = ObjectAnimator.ofFloat(binding.panelCenter, "translationX", gap);
+        ObjectAnimator right  = ObjectAnimator.ofFloat(binding.panelRight, "translationX", gap - leftMargin);
+        ObjectAnimator right2 = ObjectAnimator.ofFloat(binding.panelRight2, "translationX", gap - leftMargin);
+
+        AnimatorSet set = new AnimatorSet();
+        set.setStartDelay(startDelay);
+        set.setDuration(700);
+        set.playTogether(left, center, right, right2);
+        set.start();
     }
 }

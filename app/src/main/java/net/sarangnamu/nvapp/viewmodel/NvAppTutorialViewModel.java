@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NvAppTutorialViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(NvAppTutorialViewModel.class);
-    
+
+    public static final float PANEL_MOVE_X = 27.8f;
+
     public ObservableLong logoFade              = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
 
     public ObservableLong titleFade             = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
@@ -27,6 +29,8 @@ public class NvAppTutorialViewModel extends AndroidViewModel {
 
     public ObservableLong phoneFrameFade        = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
     public ObservableFloat phoneFrameTransition = new ObservableFloat(500);  // 임시 값 (dp 로 변경해야 함)
+    public ObservableFloat layoutGap            = new ObservableFloat();
+
 
     public NvAppTutorialViewModel(@NonNull Application application) {
         super(application);
@@ -43,14 +47,14 @@ public class NvAppTutorialViewModel extends AndroidViewModel {
     public static void bindStartCellStartAnimation(View view, long delay) {
         view.setTranslationY(100);
         view.animate().setStartDelay(delay).translationY(0)
-            .translationX(DimUtils.dpToPixel(view.getContext(), 30)).start();
+            .translationX(DimUtils.dpToPixel(view.getContext(), PANEL_MOVE_X)).start();
     }
 
     @BindingAdapter("bindEndCellStartAnimation")
     public static void bindEndCellStartAnimation(View view, long delay) {
         view.setTranslationY(100);
         view.animate().setStartDelay(delay).translationY(0)
-            .translationX(DimUtils.dpToPixel(view.getContext(), -30)).start();
+            .translationX(DimUtils.dpToPixel(view.getContext(), PANEL_MOVE_X * -1)).start();
     }
 
     @BindingAdapter("bindDelayTransitionY")
