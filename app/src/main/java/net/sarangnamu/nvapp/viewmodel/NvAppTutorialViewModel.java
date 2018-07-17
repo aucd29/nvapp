@@ -9,6 +9,8 @@ import android.databinding.ObservableLong;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import net.sarangnamu.common.util.DimUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +20,13 @@ import org.slf4j.LoggerFactory;
 public class NvAppTutorialViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(NvAppTutorialViewModel.class);
     
-    public ObservableLong logoFade              = new ObservableLong(700);
+    public ObservableLong logoFade              = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
 
-    public ObservableLong titleFade             = new ObservableLong(700);
-    public ObservableFloat titleTransition      = new ObservableFloat(200);
+    public ObservableLong titleFade             = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
+    public ObservableFloat titleTransition      = new ObservableFloat(200);  // 임시 값 (dp 로 변경해야 함)
 
-    public ObservableLong phoneFrameFade        = new ObservableLong(700);
-    public ObservableFloat phoneFrameTransition = new ObservableFloat(500);
+    public ObservableLong phoneFrameFade        = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
+    public ObservableFloat phoneFrameTransition = new ObservableFloat(500);  // 임시 값 (dp 로 변경해야 함)
 
     public NvAppTutorialViewModel(@NonNull Application application) {
         super(application);
@@ -38,15 +40,17 @@ public class NvAppTutorialViewModel extends AndroidViewModel {
     }
 
     @BindingAdapter("bindStartCellStartAnimation")
-    public static void bindStartCellStartAnimation(View view, long duration) {
-        view.setTranslationX(-300);
+    public static void bindStartCellStartAnimation(View view, long delay) {
         view.setTranslationY(100);
-        view.animate().translationX(-50).translationY(0).start();
+        view.animate().setStartDelay(delay).translationY(0)
+            .translationX(DimUtils.dpToPixel(view.getContext(), 30)).start();
     }
 
     @BindingAdapter("bindEndCellStartAnimation")
-    public static void bindEndCellStartAnimation(View view, long duration) {
-
+    public static void bindEndCellStartAnimation(View view, long delay) {
+        view.setTranslationY(100);
+        view.animate().setStartDelay(delay).translationY(0)
+            .translationX(DimUtils.dpToPixel(view.getContext(), -30)).start();
     }
 
     @BindingAdapter("bindDelayTransitionY")
