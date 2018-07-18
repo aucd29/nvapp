@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -19,8 +20,10 @@ import net.sarangnamu.libtutorial.TutorialFragment;
 import net.sarangnamu.libtutorial.TutorialParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
-import net.sarangnamu.nvapp.databinding.Tutorial0Binding;
+import net.sarangnamu.nvapp.databinding.TutorialCategoryBinding;
+import net.sarangnamu.nvapp.databinding.TutorialIntroBinding;
 import net.sarangnamu.nvapp.view.MainFragment;
+import net.sarangnamu.nvapp.viewmodel.CategoryViewModel;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel;
@@ -183,8 +186,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         }
 
         vmodel.params = TutorialParams.builder()
-            .view(R.layout.tutorial_0)
-            .view(R.layout.tutorial_1)
+            .view(R.layout.tutorial_intro)
+            .view(R.layout.tutorial_category)
             .viewDataBindingListener((res, viewDataBinding) -> {
                 if (mLog.isDebugEnabled()) {
                     mLog.debug("RECEIVED viewDataBindingListener");
@@ -192,8 +195,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
                 Invoke.method(viewDataBinding, "setNvmodel", nvmodel);
 
-                if (viewDataBinding instanceof Tutorial0Binding) {
-                    tutorial0Event((Tutorial0Binding) viewDataBinding);
+                if (viewDataBinding instanceof TutorialIntroBinding) {
+                    tutorialIntroEvent((TutorialIntroBinding) viewDataBinding);
+                } else if (viewDataBinding instanceof TutorialCategoryBinding) {
+                    tutorialCategoryEvent((TutorialCategoryBinding) viewDataBinding);
                 }
             })
             .finishedListener((result, obj) -> ViewManager.get().popBack())
@@ -203,27 +208,95 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             .fragment(TutorialFragment.class).build());
     }
 
-    private void tutorial0Event(Tutorial0Binding binding) {
-        int screenWidth  = MainApp.screenX;
-        float panelWidth = DimUtils.dpToPixel(MainActivity.this, 300);
-        float margin     = screenWidth - panelWidth;
-        float leftMargin = margin / 2f - DimUtils.dpToPixel(MainActivity.this,
-            NvAppTutorialViewModel.PANEL_MOVE_X);
-        float gap        = (panelWidth + leftMargin) * -1 ;
-        int startDelay   = 3000;
+    private void tutorialIntroEvent(@NonNull TutorialIntroBinding binding) {
+        int screenWidth     = MainApp.screenX;
+        int phoneFrameWidth = (int) (screenWidth * 0.7f);
+        int margin          = (screenWidth - phoneFrameWidth) / 2;
+        int sideX           = margin / 2;
+        int halfHeight      = (int) (MainApp.screenY / 1.8f);
 
-        // [전체크기]
+        binding.phoneFrame.getLayoutParams().width   = phoneFrameWidth;
+        binding.panelLeft.getLayoutParams().width    = phoneFrameWidth;
+        binding.panelCenter.getLayoutParams().width  = phoneFrameWidth;
+        binding.panelRight.getLayoutParams().width   = phoneFrameWidth;
+        binding.panelRight2 .getLayoutParams().width = phoneFrameWidth;
 
-        // 애니메이션 관련 작업
-        ObjectAnimator left   = ObjectAnimator.ofFloat(binding.panelLeft, "translationX", gap + leftMargin);
-        ObjectAnimator center = ObjectAnimator.ofFloat(binding.panelCenter, "translationX", gap);
-        ObjectAnimator right  = ObjectAnimator.ofFloat(binding.panelRight, "translationX", gap - leftMargin);
-        ObjectAnimator right2 = ObjectAnimator.ofFloat(binding.panelRight2, "translationX", gap - leftMargin);
+        ObjectAnimator fadeInPhoneFrame = ObjectAnimator.ofFloat(binding.phoneFrame, "alpha", 0, 1);
+        ObjectAnimator transYPhoneFrame = ObjectAnimator.ofFloat(binding.phoneFrame, "translationY", halfHeight, 0);
 
-        AnimatorSet set = new AnimatorSet();
-        set.setStartDelay(startDelay);
-        set.setDuration(700);
-        set.playTogether(left, center, right, right2);
-        set.start();
+        ObjectAnimator fadeInPanelCenter = ObjectAnimator.ofFloat(binding.panelCenter, "alpha", 0, 1);
+        ObjectAnimator transYPanelCenter = ObjectAnimator.ofFloat(binding.panelCenter, "translationY", halfHeight, 0);
+
+        ObjectAnimator transXPanelLeft = ObjectAnimator.ofFloat(binding.panelLeft, "translationX", 0, sideX);
+        ObjectAnimator transYPanelLeft = ObjectAnimator.ofFloat(binding.panelLeft, "translationY", halfHeight, 0);
+
+        ObjectAnimator transXPanelRight = ObjectAnimator.ofFloat(binding.panelRight, "translationX", 0, sideX * -1);
+        ObjectAnimator transYPanelRight = ObjectAnimator.ofFloat(binding.panelRight, "translationY", halfHeight, 0);
+
+        final AnimatorSet aniSet = new AnimatorSet();
+        aniSet.setDuration(750);
+        aniSet.playTogether(fadeInPhoneFrame, transYPhoneFrame, fadeInPanelCenter, transYPanelCenter,
+            transXPanelLeft, transYPanelLeft, transXPanelRight, transYPanelRight);
+        aniSet.addListener(new AnimatorListenerAdapter() {
+            @Override public void onAnimationStart(Animator animation, boolean isReverse) {}
+            @Override
+            public void onAnimationEnd(Animator animation, boolean isReverse) {
+                aniSet.removeAllListeners();
+
+                final ObjectAnimator transYButtonLayout = ObjectAnimator.ofFloat(binding.buttonLayout,
+                    "translationY", binding.buttonLayout.getHeight(), 0);
+                transYButtonLayout.setDuration(500);
+                transYButtonLayout.addListener(new AnimatorListenerAdapter() {
+                    @Override public void onAnimationStart(Animator animation, boolean isReverse) { }
+                    @Override
+                    public void onAnimationEnd(Animator animation, boolean isReverse) {
+                        transYButtonLayout.removeAllListeners();
+
+                        int moveX = phoneFrameWidth + sideX;
+
+                        ObjectAnimator left   = ObjectAnimator.ofFloat(binding.panelLeft, "translationX", moveX + sideX);
+                        ObjectAnimator center = ObjectAnimator.ofFloat(binding.panelCenter, "translationX", moveX);
+                        ObjectAnimator right  = ObjectAnimator.ofFloat(binding.panelRight, "translationX", moveX - sideX);
+                        ObjectAnimator right2 = ObjectAnimator.ofFloat(binding.panelRight2, "translationX", moveX - sideX);
+
+                        AnimatorSet set = new AnimatorSet();
+                        set.setDuration(700);
+                        set.playTogether(left, center, right, right2);
+                        set.start();
+                    }
+                });
+                transYButtonLayout.start();
+            }
+        });
+        aniSet.start();
+
+//
+//        float panelWidth = DimUtils.dpToPixel(MainActivity.this, 300);
+//        float margin     = screenWidth - panelWidth;
+//        float leftMargin = margin / 2f - DimUtils.dpToPixel(MainActivity.this,
+//            NvAppTutorialViewModel.PANEL_MOVE_X);
+//        float gap        = (panelWidth + leftMargin) * -1 ;
+//        int startDelay   = 3000;
+//
+//        // [전체크기]
+//
+//        // 애니메이션 관련 작업
+//        ObjectAnimator left   = ObjectAnimator.ofFloat(binding.panelLeft, "translationX", gap + leftMargin);
+//        ObjectAnimator center = ObjectAnimator.ofFloat(binding.panelCenter, "translationX", gap);
+//        ObjectAnimator right  = ObjectAnimator.ofFloat(binding.panelRight, "translationX", gap - leftMargin);
+//        ObjectAnimator right2 = ObjectAnimator.ofFloat(binding.panelRight2, "translationX", gap - leftMargin);
+//
+//        AnimatorSet set = new AnimatorSet();
+//        set.setStartDelay(startDelay);
+//        set.setDuration(700);
+//        set.playTogether(left, center, right, right2);
+//        set.start();
+    }
+
+    private void tutorialCategoryEvent(@NonNull TutorialCategoryBinding binding) {
+        CategoryViewModel cmodel = viewModel(CategoryViewModel.class);
+        cmodel.init(this);
+
+        binding.setCmodel(cmodel);
     }
 }

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import net.sarangnamu.nvapp.MainApp;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.model.room.NvAppRoom;
+import net.sarangnamu.nvapp.model.room.category.CategoryItem;
 import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
 
 import org.slf4j.Logger;
@@ -64,8 +65,10 @@ public class DataManager {
                             mLog.debug("ROOM CREATE");
                         }
 
-                        mDisposable.add(rxdb().subscribe(nvAppRoom ->
-                            nvAppRoom.navigation().prePopulate(populateNavigationData()) ));
+                        mDisposable.add(rxdb().subscribe(nvAppRoom -> {
+                                nvAppRoom.navigation().prePopulate(populateNavigationData());
+                                nvAppRoom.category().prePopulate(popuplateCategoryData());
+                            }));
                     }
                 })
                 .build();
@@ -80,10 +83,6 @@ public class DataManager {
     }
 
     public NvAppRoom db() {
-        if (mDb == null) {
-
-        }
-
         return mDb;
     }
 
@@ -101,6 +100,51 @@ public class DataManager {
         dataList.add(new NavigationItem(R.string.fa_bug, R.string.nav_grid_lab));
 
         return dataList.toArray(new NavigationItem[dataList.size()]);
+    }
+
+    private CategoryItem[] popuplateCategoryData() {
+        List<CategoryItem> dataList = new ArrayList<>();
+
+        dataList.add(new CategoryItem("뉴스", true));
+        dataList.add(new CategoryItem("연예", true));
+        dataList.add(new CategoryItem("스포츠", true));
+        dataList.add(new CategoryItem("쇼핑", true));
+        dataList.add(new CategoryItem("우리동네", true));
+
+        dataList.add(new CategoryItem("뿜", false));
+        dataList.add(new CategoryItem("웹툰", false));
+        dataList.add(new CategoryItem("영화", false));
+        dataList.add(new CategoryItem("테크", false));
+        dataList.add(new CategoryItem("경제M", false));
+        dataList.add(new CategoryItem("리빙", false));
+        dataList.add(new CategoryItem("어학당", false));
+        dataList.add(new CategoryItem("푸드", false));
+        dataList.add(new CategoryItem("패션", false));
+        dataList.add(new CategoryItem("자동차", false));
+        dataList.add(new CategoryItem("건강", false));
+        dataList.add(new CategoryItem("여행", false));
+        dataList.add(new CategoryItem("충전", false));
+        dataList.add(new CategoryItem("직업", false));
+        dataList.add(new CategoryItem("책문화", false));
+        dataList.add(new CategoryItem("게임", false));
+        dataList.add(new CategoryItem("과학", false));
+        dataList.add(new CategoryItem("부모", false));
+        dataList.add(new CategoryItem("동물공감", false));
+        dataList.add(new CategoryItem("FARM", false));
+        dataList.add(new CategoryItem("중국", false));
+        dataList.add(new CategoryItem("법률", false));
+        dataList.add(new CategoryItem("디자인", false));
+        dataList.add(new CategoryItem("비즈니스", false));
+        dataList.add(new CategoryItem("연얘 결혼", false));
+        dataList.add(new CategoryItem("동영상", false));
+        dataList.add(new CategoryItem("공연전시", false));
+        dataList.add(new CategoryItem("뮤직", false));
+        dataList.add(new CategoryItem("함께", false));
+        dataList.add(new CategoryItem("검색", false));
+        dataList.add(new CategoryItem("마이구독", false));
+        dataList.add(new CategoryItem("스쿨", false));
+
+        return dataList.toArray(new CategoryItem[dataList.size()]);
     }
 
     public void destroy() {
