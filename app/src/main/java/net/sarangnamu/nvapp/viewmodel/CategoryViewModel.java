@@ -56,24 +56,6 @@ public class CategoryViewModel extends RecyclerViewModel<CategoryItem> {
         Disposable dp = DataManager.get().rxdb()
             .subscribeOn(Schedulers.computation())
             .subscribe(db -> db.category().update(item));
-
-//        ViewGroup viewgroup = (ViewGroup) view;
-//
-//        for (int i=0; i<viewgroup.getChildCount(); ++i) {
-//            View child = viewgroup.getChildAt(i);
-//
-//            if (child.getId() == R.id.category_icon) {
-//                if (item.enable) {
-//                    child.setScaleX(.1f);
-//                    child.setScaleY(.1f);
-//                    child.animate().scaleX(1f).scaleY(1f).start();
-//                } else {
-//                    child.setScaleX(1);
-//                    child.setScaleY(1);
-//                    child.animate().scaleX(.1f).scaleY(.1f).start();
-//                }
-//            }
-//        }
     }
 
     @BindingAdapter("bindCategoryBackground")
