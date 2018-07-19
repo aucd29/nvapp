@@ -20,10 +20,9 @@ import org.slf4j.LoggerFactory;
 public class NvAppTutorialViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(NvAppTutorialViewModel.class);
 
-    public ObservableLong logoFade         = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
-
-    public ObservableLong titleFade        = new ObservableLong(700);  // 임시 값 (dp 로 변경해야 함)
-    public ObservableFloat titleTransition = new ObservableFloat(200);  // 임시 값 (dp 로 변경해야 함)
+    public ObservableLong logoFadeDuration  = new ObservableLong(700);
+    public ObservableLong titleFadeDuration = new ObservableLong(700);
+    public ObservableFloat titleTransitionY = new ObservableFloat(200);  // 임시 값 (dp 로 변경해야 함)
 
     public NvAppTutorialViewModel(@NonNull Application application) {
         super(application);
@@ -33,6 +32,5 @@ public class NvAppTutorialViewModel extends AndroidViewModel {
         if (mLog.isDebugEnabled()) {
             mLog.debug("LOGIN");
         }
-        
     }
 }

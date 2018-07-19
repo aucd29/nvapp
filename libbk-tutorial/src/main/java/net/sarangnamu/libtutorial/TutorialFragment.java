@@ -38,6 +38,10 @@ public final class TutorialFragment extends BaseFragment<TutorialMainBinding> {
 
         vmodel.init(params.viewList.size() - 1);
         vmodel.index.observe(this, index -> {
+            if (mLog.isDebugEnabled()) {
+                mLog.debug("TUTORIAL INDEX : " + index);
+            }
+
             if (index < 0) {
                 // index 값이 0 이하면 화면에 표현해야할 view 의 개수가 없는 것이므로
                 // 이 fragment 를 닫도록 요구 한다.

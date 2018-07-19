@@ -1,1 +1,2 @@
 include ':app', ':libhsp-adapter', ':widget', ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core'
+include ':libcrosswalk'

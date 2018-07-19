@@ -74,6 +74,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             return ;
         }
 
+        Fragment frgmt = ViewManager.get().getCurrentFragment();
+        if (frgmt instanceof TutorialFragment) {
+            // 현재 Fragment 가 tutorial 이면 back 키를 무시 한다.
+            return ;
+        }
+
         super.onBackPressed();
     }
 
@@ -178,6 +184,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             .fragment(MainFragment.class).addMode().build());
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // TUTORIAL
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    private static final String TRANS_Y = "translationY";
+    private static final String TRANS_X = "translationX";
+
     private void loadTutorial() {
         TutorialViewModel vmodel = viewModel(TutorialViewModel.class);
         NvAppTutorialViewModel nvmodel = viewModel(NvAppTutorialViewModel.class);
@@ -205,11 +220,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             .build();
 
         ViewManager.get().show(FragmentParams.builder().containerId(R.id.layout_main)
-            .backStack(false).fragment(TutorialFragment.class).build());
+            .fragment(TutorialFragment.class).build());
     }
-
-    private static final String TRANS_Y = "translationY";
-    private static final String TRANS_X = "translationX";
 
     // 처음엔 공통으로 써보려고 애니메이션 관련 binding adapter 를 구성하였으나
     // 객체 하나만 움직이는게 아니고 다수의 객체가 시간차를 두고 움직여야 되는 문제 때문에

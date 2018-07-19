@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.15"
-            app:bindFadeIn="@{nvmodel.logoFade}"
+            app:bindFadeIn="@{nvmodel.logoFadeDuration}"
             />
 
         <TextView
@@ -41,8 +41,8 @@
             android:text="@string/tutorial_intro_big_title"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:bindFadeIn="@{nvmodel.titleFade}"
-            app:bindTransitionY="@{nvmodel.titleTransition}"
+            app:bindFadeIn="@{nvmodel.titleFadeDuration}"
+            app:bindTransitionY="@{nvmodel.titleTransitionY}"
             />
 
         <TextView
@@ -54,8 +54,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/big_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:bindFadeIn="@{nvmodel.titleFade}"
-            app:bindTransitionY="@{nvmodel.titleTransition}"
+            app:bindFadeIn="@{nvmodel.titleFadeDuration}"
+            app:bindTransitionY="@{nvmodel.titleTransitionY}"
             />
 
         <!-- LEFT -->
