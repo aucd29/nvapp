@@ -19,6 +19,9 @@ public interface CategoryDao {
     @Query("SELECT * FROM " + CategoryItem.TABLE)
     List<CategoryItem> list();
 
+    @Query("SELECT * FROM category WHERE enable=:enable")
+    List<CategoryItem> list(boolean enable);
+
     @Query("UPDATE category SET enable=:setEnableValue WHERE enable IN (SELECT _id FROM category WHERE enable=:getEnableValue)")
     void toggle(boolean setEnableValue, boolean getEnableValue);
 

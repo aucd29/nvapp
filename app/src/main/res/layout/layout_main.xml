@@ -15,17 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/web"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bindUrl="@{vmodel.url}"
-            app:bindClient="@{vmodel.webviewClient}"
-            app:bindChrome="@{vmodel.webviewChromeClient}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             />
 
         <android.support.constraint.ConstraintLayout
@@ -116,15 +109,40 @@
 
         </android.support.constraint.ConstraintLayout>
 
-
         <android.support.design.widget.TabLayout
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/add_tab"
+            app:bindTabLayout="@{null}"
+            android:background="@android:color/white"
+            app:tabMode="scrollable"
             />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/add_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/tab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tab"
+            android:background="@android:color/white"
+            android:padding="10dp"
+            >
+            <net.sarangnamu.libdingbat.widget.AwesomeSolid
+                android:id="@+id/add_tab_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fa_plus"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
