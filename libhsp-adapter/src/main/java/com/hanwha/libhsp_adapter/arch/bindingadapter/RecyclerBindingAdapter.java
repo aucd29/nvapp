@@ -41,8 +41,8 @@ public class RecyclerBindingAdapter {
 
     @BindingAdapter({"bindAdapter", "bindItems"})
     public static void bindAdapter(@NonNull RecyclerView recycler, RecyclerView.Adapter adapter, ArrayList<?> items) {
-        if (mLog.isTraceEnabled()) {
-            mLog.trace("BIND ADAPTER");
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("BIND ADAPTER (" + recycler.getId() + ") ITEM COUNT (" + items.size() + ")");
         }
 
         HspAdapter hspadapter;

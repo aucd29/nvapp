@@ -17,7 +17,7 @@ public interface CategoryDao {
     void prePopulate(CategoryItem... items);
 
     @Query("SELECT * FROM " + CategoryItem.TABLE)
-    LiveData<List<CategoryItem>> list();
+    List<CategoryItem> list();
 
     @Query("UPDATE category SET enable=:setEnableValue WHERE enable IN (SELECT _id FROM category WHERE enable=:getEnableValue)")
     void toggle(boolean setEnableValue, boolean getEnableValue);

@@ -16,18 +16,38 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_category_enable"
-        android:onClick="@{() -> vmodel.toggle(item)}"
+        android:onClick="@{(v) -> vmodel.toggle(v, item)}"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        app:bindCategoryBackground="@{item.enable}"
         >
 
         <TextView
+            android:id="@+id/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="HELLO WORLD"
+            android:text="@{item.label}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <net.sarangnamu.libdingbat.widget.AwesomeSolid
+            android:id="@+id/category_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp"
+            tools:text="@string/fa_check"
+            android:text="@string/fa_check"
+            android:textColor="@color/colorPrimary"
+            app:bindCategoryIconBackground="@{item.enable}"
             />
 
     </android.support.constraint.ConstraintLayout>

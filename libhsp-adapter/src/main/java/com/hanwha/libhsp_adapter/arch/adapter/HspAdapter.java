@@ -104,6 +104,11 @@ public class HspAdapter<ITEM> extends RecyclerView.Adapter<HspViewHolder> {
 
         if (mItems != null) {
             ITEM item = mItems.get(position);
+
+            if (item instanceof IHspPosition) {
+                ((IHspPosition) item).position(position);
+            }
+
             invokeMethod(holder.mBinding, METHOD_NAME_ITEM, item.getClass(), item, true);
         }
 
@@ -134,6 +139,10 @@ public class HspAdapter<ITEM> extends RecyclerView.Adapter<HspViewHolder> {
     }
 
     public void setItems(final RecyclerView recycler, final List<ITEM> items) {
+        if (mItems == null && items.size() <= 0) {
+            return ;
+        }
+
         if (mItems == null) {
             mItems = new ArrayList<>();
             mItems.addAll(items);
@@ -184,26 +193,40 @@ public class HspAdapter<ITEM> extends RecyclerView.Adapter<HspViewHolder> {
                     recycler.smoothScrollToPosition(mFirstInsert);
                 }
 
+                if (mLog.isDebugEnabled()) {
+                    mLog.debug("INSERTED");
+                }
+
                 notifyItemRangeInserted(position, count);
             }
 
             @Override
             public void onRemoved(int position, int count) {
+                if (mLog.isDebugEnabled()) {
+                    mLog.debug("REMOVED");
+                }
+
                 notifyItemRangeRemoved(position, count);
             }
 
             @Override
             public void onMoved(int fromPosition, int toPosition) {
+                if (mLog.isDebugEnabled()) {
+                    mLog.debug("MOVED");
+                }
+
                 notifyItemMoved(fromPosition, toPosition);
             }
 
             @Override
             public void onChanged(int position, int count, Object payload) {
+                if (mLog.isDebugEnabled()) {
+                    mLog.debug("CHANGED");
+                }
+
                 notifyItemRangeChanged(position, count, payload);
             }
         });
-
-//        result.dispatchUpdatesTo(this);
 
         mItems.clear();
         mItems.addAll(items);
