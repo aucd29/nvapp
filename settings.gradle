@@ -1,2 +1,3 @@
-include ':app', ':libhsp-adapter', ':widget', ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core'
-include ':libcrosswalk'
+include ':app'
+include ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core'
+include ':libhsp-adapter'

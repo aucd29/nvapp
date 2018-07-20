@@ -14,6 +14,9 @@ import android.webkit.WebViewClient;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.room.category.CategoryItem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,7 +27,8 @@ import io.reactivex.schedulers.Schedulers;
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 10. <p/>
  */
 public class MainViewModel extends AndroidViewModel {
-    public ObservableField<String> url = new ObservableField<>("https://m.naver.com");
+    private static final Logger mLog = LoggerFactory.getLogger(MainViewModel.class);
+    
     public MutableLiveData<List<CategoryItem>> tabList = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
@@ -51,5 +55,12 @@ public class MainViewModel extends AndroidViewModel {
 
                 tab.setTabGravity(TabLayout.GRAVITY_FILL);
             });
+    }
+
+    public void showNavigation() {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("SHOW NAVIGATION");
+        }
+        
     }
 }
