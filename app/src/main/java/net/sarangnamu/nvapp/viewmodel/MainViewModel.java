@@ -30,7 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 10. <p/>
  */
-public class MainViewModel extends AndroidViewModel implements MainCallback {
+public class MainViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(MainViewModel.class);
     
     public MutableLiveData<List<CategoryItem>> tabList = new MutableLiveData<>();

@@ -1,10 +1,8 @@
 package net.sarangnamu.nvapp;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 
-import net.sarangnamu.common.util.DimUtils;
 import net.sarangnamu.common.util.Invoke;
 import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.AnimationEndListener;
@@ -24,6 +21,7 @@ import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.libtutorial.TutorialFragment;
 import net.sarangnamu.libtutorial.TutorialParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
+import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.databinding.TutorialCategoryBinding;
@@ -43,7 +41,9 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainCallback {
+public class MainActivity extends BaseActivity<ActivityMainBinding>
+    implements MainCallback, FragmentCallback {
+
     private static final Logger mLog = LoggerFactory.getLogger(MainActivity.class);
 
     private CompositeDisposable mDisposable = new CompositeDisposable();
@@ -54,10 +54,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
     public void onCreate(Bundle savedInstanceState) {
         loadSplash();
 
-        super.onCreate(savedInstanceState);
-
-        // https://developer.android.com/topic/performance/vitals/launch-time
         setTheme(R.style.AppTheme);
+
+        super.onCreate(savedInstanceState);
 
         initBinding();
 
@@ -87,7 +86,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         }
 
         mAppTermiator.onBackPressed();
-//        super.onBackPressed();
     }
 
     @Override
@@ -151,6 +149,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
+                vmodel.mMainCallback = MainActivity.this;
+                vmodel.mFragmentCallback = MainActivity.this;
+
                 vmodel.init(MainActivity.this);
                 mBinding.navMain.setVmodel(vmodel);
 
@@ -159,13 +160,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
             }));
 
         viewModel(MainViewModel.class).mainCallback = this;
-    }
-
-    @Override
-    public void showNavigation() {
-        if (!mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
-            mBinding.drawerLayout.openDrawer(Gravity.START);
-        }
     }
 
     private void initUserInfo() {
@@ -343,4 +337,43 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         binding.setCmodel(cmodel);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // MainCallback
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+    
+    @Override
+    public void showNavigation() {
+        if (!mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
+            mBinding.drawerLayout.openDrawer(Gravity.START);
+        }
+    }
+
+    @Override
+    public void hideNavigation() {
+        if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
+            mBinding.drawerLayout.closeDrawer(Gravity.START);
+            return ;
+        }
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // FragmentCallback
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void showFragment(Class<?> clazz) {
+        ViewManager.get().show(FragmentParams.builder()
+            .containerId(R.id.layout_main)
+            .fragment(clazz)
+            .build());
+    }
+
+    @Override
+    public void hideFragment() {
+        ViewManager.get().popBack();
+    }
 }

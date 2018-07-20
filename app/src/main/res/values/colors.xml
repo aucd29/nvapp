@@ -4,8 +4,13 @@
     <color name="colorPrimaryDark">#ed7314</color>
     <color name="colorAccent">#ff5500</color>
 
+    <!-- COMMON -->
+
+    <color name="gray">#dedede</color>
+
     <!-- MAIN NAVIGATION -->
 
     <color name="nav_divider">#dedede</color>
+
 
 </resources>

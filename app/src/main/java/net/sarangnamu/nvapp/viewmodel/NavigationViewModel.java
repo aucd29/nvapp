@@ -13,8 +13,11 @@ import android.view.View;
 import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
 import net.sarangnamu.nvapp.R;
+import net.sarangnamu.nvapp.callback.FragmentCallback;
+import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
+import net.sarangnamu.nvapp.view.LoginFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +41,9 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     public ObservableInt verDecoration    = new ObservableInt(R.drawable.shape_divider_ver);
     public ObservableInt spanCount        = new ObservableInt(4);
 
+    public MainCallback mMainCallback;
+    public FragmentCallback mFragmentCallback;
+
     public NavigationViewModel(Application app) {
         super(app);
 
@@ -46,6 +52,10 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
 
     public void init(@NonNull LifecycleOwner owner) {
         DataManager.get().db().navigation().list().observe(owner, it -> {
+            if (it == null) {
+                return ;
+            }
+
             if (mLog.isDebugEnabled()) {
                 mLog.debug("NAVIGATION ITEM COUNT : " + it.size());
             }
@@ -55,6 +65,7 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
 
             setItems(list);
         });
+
         initAdapter(new String[] {"nav_grid_item", "nav_grid_plus"});
     }
 
@@ -62,6 +73,12 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         if (mLog.isDebugEnabled()) {
             mLog.debug("close");
         }
+
+        if (mMainCallback == null) {
+            return ;
+        }
+
+        mMainCallback.hideNavigation();
     }
 
     public void notification() {
@@ -126,7 +143,13 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         if (mLog.isDebugEnabled()) {
             mLog.debug("CLICK SERVICE : " + string(labelId));
         }
-        
+
+        // 임시로 로그인 fragment 를 call
+        if (mFragmentCallback == null) {
+            return ;
+        }
+
+        mFragmentCallback.showFragment(LoginFragment.class);
     }
     
     public void clickAddService() {
