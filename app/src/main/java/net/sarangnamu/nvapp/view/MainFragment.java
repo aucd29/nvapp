@@ -42,9 +42,13 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
         MainViewModel vmodel = viewModel(MainViewModel.class);
         vmodel.init();
         vmodel.tabList.observe(this, list -> {
+            if (mLog.isDebugEnabled()) {
+                mLog.debug("TAB COUNT : " + list.size());
+            }
             mBinding.viewpager.setAdapter(new MainPageAdapter(getChildFragmentManager(), list));
         });
 
+        mBinding.tab.setupWithViewPager(mBinding.viewpager);
         mBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -53,6 +57,8 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             @Override public void onTabUnselected(TabLayout.Tab tab) { }
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
+
+        vmodel.notificationCount(2);
 
         mBinding.setVmodel(vmodel);
     }
@@ -98,7 +104,6 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
 
             });
             mWeb.loadUrl("http://m.naver.com");
-//            mWeb.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
             mWeb.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
             return mWeb;
@@ -124,6 +129,16 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
         @Override
         public int getCount() {
             return mList.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (mList == null || mList.get(position) == null) {
+                return "Unknown";
+            }
+
+            return mList.get(position).label;
         }
     }
 

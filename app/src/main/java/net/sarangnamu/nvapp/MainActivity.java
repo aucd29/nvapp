@@ -23,11 +23,13 @@ import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.libtutorial.TutorialFragment;
 import net.sarangnamu.libtutorial.TutorialParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
+import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.databinding.TutorialCategoryBinding;
 import net.sarangnamu.nvapp.databinding.TutorialIntroBinding;
 import net.sarangnamu.nvapp.view.MainFragment;
 import net.sarangnamu.nvapp.viewmodel.CategoryViewModel;
+import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel;
@@ -40,7 +42,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainCallback {
     private static final Logger mLog = LoggerFactory.getLogger(MainActivity.class);
 
     private CompositeDisposable mDisposable = new CompositeDisposable();
@@ -150,6 +152,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 log.end();
                 loadFragments();
             }));
+
+        viewModel(MainViewModel.class).mainCallback = this;
+    }
+
+    @Override
+    public void showNavigation() {
+        if (!mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
+            mBinding.drawerLayout.openDrawer(Gravity.START);
+        }
     }
 
     private void initUserInfo() {
@@ -326,4 +337,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
         binding.setCmodel(cmodel);
     }
+
 }

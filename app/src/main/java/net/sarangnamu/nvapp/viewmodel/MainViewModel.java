@@ -5,12 +5,16 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
 
+import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.room.category.CategoryItem;
 
@@ -26,10 +30,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 10. <p/>
  */
-public class MainViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel implements MainCallback {
     private static final Logger mLog = LoggerFactory.getLogger(MainViewModel.class);
     
     public MutableLiveData<List<CategoryItem>> tabList = new MutableLiveData<>();
+    public ObservableInt notificationVisible = new ObservableInt(View.GONE);
+    public ObservableInt notificationCount = new ObservableInt(0);
+
+    public MainCallback mainCallback;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -43,24 +51,23 @@ public class MainViewModel extends AndroidViewModel {
             .subscribe(items -> tabList.postValue(items));
     }
 
-    @BindingAdapter("bindTabLayout")
-    public static void bindTabList(TabLayout tab, Object dumy) {
-        Disposable d = DataManager.get().rxdb().subscribeOn(Schedulers.computation())
-            .subscribe(db -> {
-                List<CategoryItem> items = db.category().list(true);
-
-                for (CategoryItem item : items) {
-                    tab.addTab(tab.newTab().setText(item.label));
-                }
-
-                tab.setTabGravity(TabLayout.GRAVITY_FILL);
-            });
-    }
-
     public void showNavigation() {
         if (mLog.isDebugEnabled()) {
             mLog.debug("SHOW NAVIGATION");
         }
-        
+
+        if (mainCallback != null) {
+            mainCallback.showNavigation();
+        }
+    }
+
+    public void notificationCount(int count) {
+        if (count > 0) {
+            notificationVisible.set(View.VISIBLE);
+        } else {
+            notificationVisible.set(View.GONE);
+        }
+
+        notificationCount.set(count);
     }
 }
