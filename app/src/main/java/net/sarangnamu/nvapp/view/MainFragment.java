@@ -14,6 +14,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import net.sarangnamu.common.arch.bindingadapter.WebViewBindingAdapter;
 import net.sarangnamu.libfragment.BaseFragment;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.databinding.LayoutMainBinding;
@@ -42,10 +43,17 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
         MainViewModel vmodel = viewModel(MainViewModel.class);
         vmodel.init();
         vmodel.tabList.observe(this, list -> {
+            if (list == null) {
+                mLog.error("ERROR: list == null");
+                return ;
+            }
+
             if (mLog.isDebugEnabled()) {
                 mLog.debug("TAB COUNT : " + list.size());
             }
+
             mBinding.viewpager.setAdapter(new MainPageAdapter(getChildFragmentManager(), list));
+            mBinding.viewpager.setOffscreenPageLimit(list.size());
         });
 
         mBinding.tab.setupWithViewPager(mBinding.viewpager);
@@ -75,11 +83,15 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
     ////////////////////////////////////////////////////////////////////////////////////
 
     public static class WebFragment extends Fragment {
+        private static final String NAME = "name";
+        private static final String TAG  = "tag";
+
         private WebView mWeb;
 
-        public static WebFragment create(String name) {
+        public static WebFragment create(CategoryItem item) {
             Bundle args = new Bundle();
-            args.putString("name", name);
+            args.putString(NAME, item.label);
+            args.putString(TAG, item.tag);
 
             WebFragment frgmt = new WebFragment();
             frgmt.setArguments(args);
@@ -90,21 +102,22 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            String name = getArguments().getString("name");
+            String name = getArguments().getString(NAME);
+            String tag  = getArguments().getString(TAG);
+            String url  = "http://m.naver.com/#" + tag;
 
             if (mLog.isDebugEnabled()) {
                 mLog.debug("NAME : " + name);
+                mLog.debug("TAG  : " + tag);
+                mLog.debug("URL  : " + url);
             }
 
             mWeb = new WebView(inflater.getContext());
-            mWeb.setWebChromeClient(new WebChromeClient() {
-
-            });
-            mWeb.setWebViewClient(new WebViewClient() {
-
-            });
-            mWeb.loadUrl("http://m.naver.com");
             mWeb.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+            WebViewBindingAdapter.webviewSetting(mWeb, url,
+                new WebViewClient() { },
+                new WebChromeClient() { });
 
             return mWeb;
         }
@@ -123,7 +136,7 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
         public Fragment getItem(int pos) {
             CategoryItem item = mList.get(pos);
 
-            return WebFragment.create(item.label);
+            return WebFragment.create(item);
         }
 
         @Override
@@ -141,5 +154,4 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             return mList.get(position).label;
         }
     }
-
 }

@@ -22,21 +22,29 @@ public class CategoryItem implements IHspDiff, IHspItem, IHspPosition {
     public int _id;
 
     public String label;
-
+    public String tag;
     public boolean enable;
 
     @Ignore
     private int position;
 
+    @Ignore
+    public CategoryItem(@NonNull String label, @NonNull String tag, boolean enable) {
+        this.label  = label;
+        this.tag    = tag;
+        this.enable = enable;
+    }
+
     public CategoryItem(@NonNull String label, boolean enable) {
-        this.label = label;
+        this.label  = label;
+        this.tag    = "NEWS"; // 다 넣기 귀찮아서..
         this.enable = enable;
     }
 
     @Override
     public boolean compare(Object item) {
         CategoryItem obj = (CategoryItem) item;
-        return label.equals(obj.label) && enable == obj.enable;
+        return label.equals(obj.label) && enable == obj.enable && tag.equals(obj.tag);
     }
 
     @Override

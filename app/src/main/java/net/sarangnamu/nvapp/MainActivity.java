@@ -18,6 +18,7 @@ import net.sarangnamu.common.util.DimUtils;
 import net.sarangnamu.common.util.Invoke;
 import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.AnimationEndListener;
+import net.sarangnamu.libcore.AppTerminator;
 import net.sarangnamu.libcore.TimeLoger;
 import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.libtutorial.TutorialFragment;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
 
     private CompositeDisposable mDisposable = new CompositeDisposable();
     private Integer mCounter = 0;
+    private AppTerminator mAppTermiator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         setTheme(R.style.AppTheme);
 
         initBinding();
+
+        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
         ViewManager.get().setFragmentManager(this);
 
         initNavigation();
@@ -82,7 +86,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
             return ;
         }
 
-        super.onBackPressed();
+        mAppTermiator.onBackPressed();
+//        super.onBackPressed();
     }
 
     @Override

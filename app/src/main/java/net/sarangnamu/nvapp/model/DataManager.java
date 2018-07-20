@@ -105,11 +105,11 @@ public class DataManager {
     private CategoryItem[] popuplateCategoryData() {
         List<CategoryItem> dataList = new ArrayList<>();
 
-        dataList.add(new CategoryItem("뉴스", true));
-        dataList.add(new CategoryItem("연예", true));
-        dataList.add(new CategoryItem("스포츠", true));
-        dataList.add(new CategoryItem("쇼핑", true));
-        dataList.add(new CategoryItem("우리동네", true));
+        dataList.add(new CategoryItem("뉴스", "NEWS", true));
+        dataList.add(new CategoryItem("연예", "ENT", true));
+        dataList.add(new CategoryItem("스포츠", "SPORTS", true));
+        dataList.add(new CategoryItem("쇼핑", "SHOPPING", true));
+        dataList.add(new CategoryItem("우리동네", "PLACE", true));
 
         dataList.add(new CategoryItem("뿜", false));
         dataList.add(new CategoryItem("웹툰", false));
