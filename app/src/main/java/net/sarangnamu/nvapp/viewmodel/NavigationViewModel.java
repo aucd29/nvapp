@@ -12,12 +12,14 @@ import android.view.View;
 
 import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
+import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
 import net.sarangnamu.nvapp.view.LoginFragment;
+import net.sarangnamu.nvapp.view.MainFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,10 +148,18 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
 
         // 임시로 로그인 fragment 를 call
         if (mFragmentCallback == null) {
+            mLog.error("ERROR: mFragmentCallback == null");
             return ;
         }
 
-        mFragmentCallback.showFragment(LoginFragment.class);
+//        mFragmentCallback.showFragment(LoginFragment.class);
+
+        // navi는 상위 layout 에 fragment 를 bind 한다.
+        mFragmentCallback.showFragment(FragmentParams.builder()
+            .containerId(R.id.layout_navi)
+            .animation("left")
+            .fragment(LoginFragment.class)
+            .build());
     }
     
     public void clickAddService() {

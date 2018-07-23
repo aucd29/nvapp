@@ -53,7 +53,8 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             }
 
             mBinding.viewpager.setAdapter(new MainPageAdapter(getChildFragmentManager(), list));
-            mBinding.viewpager.setOffscreenPageLimit(list.size());
+            // 메모리 아끼는 듯
+//            mBinding.viewpager.setOffscreenPageLimit(list.size());
         });
 
         mBinding.tab.setupWithViewPager(mBinding.viewpager);

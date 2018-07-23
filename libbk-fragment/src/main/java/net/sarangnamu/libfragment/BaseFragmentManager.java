@@ -66,8 +66,13 @@ public abstract class BaseFragmentManager {
             String tagName            = frgmt.getClass().getName();
 
             if (!TextUtils.isEmpty(params.anim)) {
-                switch (params.anim) {
-                    case "end":
+                switch (params.anim.toLowerCase()) {
+                    case "left":
+                        trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next,
+                            R.anim.slide_out_current, R.anim.slide_out_prev);
+                        break;
+
+                    case "right":
                         trans.setCustomAnimations(R.anim.slide_out_current, R.anim.slide_out_prev
                             ,R.anim.slide_in_current, R.anim.slide_in_next);
                         break;

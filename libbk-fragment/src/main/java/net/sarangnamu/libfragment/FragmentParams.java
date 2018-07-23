@@ -25,13 +25,13 @@ import android.support.annotation.NonNull;
  */
 public class FragmentParams {
     @IdRes
-    int containerViewId;
-    Bundle bundle;
-    Class<?> fragment;
-    String anim;
-    boolean addMode;
-    boolean backStack;
-    BaseFragmentManager.TransitionListener transitionListener;
+    public final int containerViewId;
+    public final Bundle bundle;
+    public final Class<?> fragment;
+    public final String anim;
+    public final boolean addMode;
+    public final boolean backStack;
+    public final BaseFragmentManager.TransitionListener transitionListener;
 
     private FragmentParams(Builder builder) {
         this.containerViewId    = builder.containerViewId;
@@ -55,13 +55,13 @@ public class FragmentParams {
 
     public static class Builder {
         @IdRes
-        int containerViewId;
-        Bundle bundle;
-        Class<?> fragment;
-        boolean addMode   = false;
-        boolean backStack = true;
-        String anim = null;
-        BaseFragmentManager.TransitionListener transitionListener;
+        private int containerViewId;
+        private Bundle bundle;
+        private Class<?> fragment;
+        private boolean addMode   = false;
+        private boolean backStack = true;
+        private String anim = null;
+        private BaseFragmentManager.TransitionListener transitionListener;
 
         public Builder containerId(@IdRes int containerViewId) {
             this.containerViewId = containerViewId;

@@ -74,6 +74,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     @Override
     public void onBackPressed() {
+        int navigationLayoutChildCount = mBinding.layoutNavi.getChildCount();
+        if (navigationLayoutChildCount > 0) {
+            if (mLog.isDebugEnabled()) {
+                mLog.debug("BACK COUNT : " + navigationLayoutChildCount);
+            }
+
+            hideFragment();
+            return ;
+        }
+
         if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
             mBinding.drawerLayout.closeDrawer(Gravity.START);
             return ;
@@ -149,14 +159,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
-                vmodel.mMainCallback = MainActivity.this;
+                vmodel.mMainCallback     = MainActivity.this;
                 vmodel.mFragmentCallback = MainActivity.this;
-
                 vmodel.init(MainActivity.this);
+
                 mBinding.navMain.setVmodel(vmodel);
 
-                log.end();
                 loadFragments();
+                log.end();
             }));
 
         viewModel(MainViewModel.class).mainCallback = this;
@@ -186,12 +196,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     }
 
     private void loadMain() {
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("MAIN START");
-        }
-
-        ViewManager.get().show(FragmentParams.builder().containerId(R.id.layout_main)
-            .fragment(MainFragment.class).addMode().build());
+        showFragment(FragmentParams.builder()
+            .containerId(R.id.layout_main)
+            .fragment(MainFragment.class)
+            .addMode().build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -365,11 +373,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void showFragment(Class<?> clazz) {
-        ViewManager.get().show(FragmentParams.builder()
-            .containerId(R.id.layout_main)
-            .fragment(clazz)
-            .build());
+    public void showFragment(@NonNull FragmentParams params) {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("SHOW FRAGMENT = " + params.fragment.getSimpleName());
+        }
+
+        ViewManager.get().show(params);
     }
 
     @Override

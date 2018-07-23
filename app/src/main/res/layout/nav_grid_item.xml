@@ -49,16 +49,5 @@
             app:layout_constraintVertical_chainStyle="packed"
             />
 
-        <!--<net.sarangnamu.libdingbat.widget.AwesomeSolid-->
-            <!--android:id="@+id/new_icon"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="7sp"-->
-            <!--tools:text="@string/fa_eye"-->
-            <!--android:textColor="@color/colorAccent"-->
-            <!--app:layout_constraintTop_toTopOf="@+id/icon"-->
-            <!--app:layout_constraintEnd_toEndOf="@+id/icon"-->
-            <!--/>-->
-
     </android.support.constraint.ConstraintLayout>
 </layout>
