@@ -41,7 +41,6 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     public ObservableInt verDecoration    = new ObservableInt(R.drawable.shape_divider_ver);
     public ObservableInt spanCount        = new ObservableInt(4);
 
-    public MainCallback mMainCallback;
     public FragmentCallback mFragmentCallback;
 
     public NavigationViewModel(Application app) {
@@ -74,11 +73,11 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
             mLog.debug("close");
         }
 
-        if (mMainCallback == null) {
+        if (mFragmentCallback == null) {
             return ;
         }
 
-        mMainCallback.hideNavigation();
+        mFragmentCallback.hideFragment();
     }
 
     public void notification() {

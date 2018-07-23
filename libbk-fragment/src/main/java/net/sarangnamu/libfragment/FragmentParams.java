@@ -18,6 +18,7 @@ package net.sarangnamu.libfragment;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 
 /**
  * Created by <a href="mailto:aucd29@gmail.com">Burke Choi</a> on 2018. 5. 30.. <p/>
@@ -27,6 +28,7 @@ public class FragmentParams {
     int containerViewId;
     Bundle bundle;
     Class<?> fragment;
+    String anim;
     boolean addMode;
     boolean backStack;
     BaseFragmentManager.TransitionListener transitionListener;
@@ -34,6 +36,7 @@ public class FragmentParams {
     private FragmentParams(Builder builder) {
         this.containerViewId    = builder.containerViewId;
         this.fragment           = builder.fragment;
+        this.anim               = builder.anim;
         this.bundle             = builder.bundle;
         this.backStack          = builder.backStack;
         this.transitionListener = builder.transitionListener;
@@ -57,6 +60,7 @@ public class FragmentParams {
         Class<?> fragment;
         boolean addMode   = false;
         boolean backStack = true;
+        String anim = null;
         BaseFragmentManager.TransitionListener transitionListener;
 
         public Builder containerId(@IdRes int containerViewId) {
@@ -87,6 +91,11 @@ public class FragmentParams {
         public Builder addMode() {
             this.addMode   = true;
             this.backStack = false;
+            return this;
+        }
+
+        public Builder animation(@NonNull String direction) {
+            this.anim = direction;
             return this;
         }
 

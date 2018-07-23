@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +18,7 @@ import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.AnimationEndListener;
 import net.sarangnamu.libcore.AppTerminator;
 import net.sarangnamu.libcore.TimeLoger;
+import net.sarangnamu.libfragment.BaseFragmentManager;
 import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.libtutorial.TutorialFragment;
 import net.sarangnamu.libtutorial.TutorialParams;
@@ -27,6 +29,7 @@ import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.databinding.TutorialCategoryBinding;
 import net.sarangnamu.nvapp.databinding.TutorialIntroBinding;
 import net.sarangnamu.nvapp.view.MainFragment;
+import net.sarangnamu.nvapp.view.NavigationFragment;
 import net.sarangnamu.nvapp.viewmodel.CategoryViewModel;
 import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
@@ -42,7 +45,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding>
-    implements MainCallback, FragmentCallback {
+    implements FragmentCallback {
 
     private static final Logger mLog = LoggerFactory.getLogger(MainActivity.class);
 
@@ -60,7 +63,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
         initBinding();
 
-        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
+        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.layoutMain);
         ViewManager.get().setFragmentManager(this);
 
         initNavigation();
@@ -74,18 +77,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     @Override
     public void onBackPressed() {
-        if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
-            mBinding.drawerLayout.closeDrawer(Gravity.START);
-            return ;
-        }
-
         Fragment frgmt = ViewManager.get().getCurrentFragment();
         if (frgmt instanceof TutorialFragment) {
             // 현재 Fragment 가 tutorial 이면 back 키를 무시 한다.
             return ;
         }
 
-        mAppTermiator.onBackPressed();
+        int count = ViewManager.get().getChildCount();
+
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("COUNT FRAGMENT = " + count);
+        }
+
+        if (count > 0) {
+            super.onBackPressed();
+        } else {
+            mAppTermiator.onBackPressed();
+        }
     }
 
     @Override
@@ -134,32 +142,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
-    private void matchParentNavigationView() {
-        DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mBinding.navView.getLayoutParams();
-
-        lp.width = MainApp.screenX;
-        mBinding.navView.setLayoutParams(lp);
-    }
-
     private void initNavigation() {
         final TimeLoger.TimeLog log = TimeLoger.start("NAVIGATION");
 
-        matchParentNavigationView();
         mDisposable.add(Observable.just(viewModel(NavigationViewModel.class))
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
-                vmodel.mMainCallback = MainActivity.this;
                 vmodel.mFragmentCallback = MainActivity.this;
-
                 vmodel.init(MainActivity.this);
-                mBinding.navMain.setVmodel(vmodel);
 
                 log.end();
                 loadFragments();
             }));
-
-        viewModel(MainViewModel.class).mainCallback = this;
     }
 
     private void initUserInfo() {
@@ -170,7 +165,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
                 vmodel.init();
-                mBinding.navMain.setUser(vmodel);
 
                 log.end();
                 loadFragments();
@@ -339,37 +333,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     ////////////////////////////////////////////////////////////////////////////////////
     //
-    // MainCallback
-    //
-    ////////////////////////////////////////////////////////////////////////////////////
-    
-    @Override
-    public void showNavigation() {
-        if (!mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
-            mBinding.drawerLayout.openDrawer(Gravity.START);
-        }
-    }
-
-    @Override
-    public void hideNavigation() {
-        if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
-            mBinding.drawerLayout.closeDrawer(Gravity.START);
-            return ;
-        }
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////
-    //
     // FragmentCallback
     //
     ////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void showFragment(Class<?> clazz) {
-        ViewManager.get().show(FragmentParams.builder()
+    public void showFragment(@NonNull Class<?> clazz) {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("SHOW FRAGMENT : " + clazz.getSimpleName());
+        }
+
+        FragmentParams.Builder bd = FragmentParams.builder()
             .containerId(R.id.layout_main)
-            .fragment(clazz)
-            .build());
+            .fragment(clazz);
+
+        if (clazz == NavigationFragment.class) {
+            bd.animation("end");
+        }
+
+        ViewManager.get().show(bd.build());
     }
 
     @Override

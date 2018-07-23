@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,20 @@ public abstract class BaseFragmentManager {
 
             FragmentTransaction trans = mFrgmtManager.beginTransaction();
             String tagName            = frgmt.getClass().getName();
+
+            if (!TextUtils.isEmpty(params.anim)) {
+                switch (params.anim) {
+                    case "end":
+                        trans.setCustomAnimations(R.anim.slide_out_current, R.anim.slide_out_prev
+                            ,R.anim.slide_in_current, R.anim.slide_in_next);
+                        break;
+
+                    case "up":
+                        trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next,
+                            R.anim.slide_down_current, R.anim.slide_down_prev);
+                        break;
+                }
+            }
 
             if (params.addMode) {
                 trans.add(params.containerViewId, frgmt, tagName);

@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <net.sarangnamu.common.widget.LockedDrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:openDrawer="start">
+    <!--<net.sarangnamu.common.widget.LockedDrawerLayout-->
+        <!--android:id="@+id/drawer_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:openDrawer="start">-->
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/layout_main"
@@ -16,20 +16,20 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity"/>
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            >
+        <!--<android.support.design.widget.NavigationView-->
+            <!--android:id="@+id/nav_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="start"-->
+            <!--&gt;-->
 
-            <include
-                android:id="@+id/nav_main"
-                layout="@layout/nav_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <!--<include-->
+                <!--android:id="@+id/nav_main"-->
+                <!--layout="@layout/nav_main"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
 
-        </android.support.design.widget.NavigationView>
+        <!--</android.support.design.widget.NavigationView>-->
 
-    </net.sarangnamu.common.widget.LockedDrawerLayout>
+    <!--</net.sarangnamu.common.widget.LockedDrawerLayout>-->
 </layout>

@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 import net.sarangnamu.common.arch.bindingadapter.WebViewBindingAdapter;
 import net.sarangnamu.libfragment.BaseFragment;
 import net.sarangnamu.nvapp.R;
+import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.databinding.LayoutMainBinding;
 import net.sarangnamu.nvapp.model.room.category.CategoryItem;
 import net.sarangnamu.nvapp.viewmodel.MainViewModel;
@@ -42,6 +43,7 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
 
         MainViewModel vmodel = viewModel(MainViewModel.class);
         vmodel.init();
+        vmodel.mFragmentCallback = (FragmentCallback) getActivity();
         vmodel.tabList.observe(this, list -> {
             if (list == null) {
                 mLog.error("ERROR: list == null");

@@ -14,9 +14,11 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
 
+import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.room.category.CategoryItem;
+import net.sarangnamu.nvapp.view.NavigationFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,7 @@ public class MainViewModel extends AndroidViewModel {
     public ObservableInt notificationVisible = new ObservableInt(View.GONE);
     public ObservableInt notificationCount = new ObservableInt(0);
 
-    public MainCallback mainCallback;
+    public FragmentCallback mFragmentCallback;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -56,9 +58,12 @@ public class MainViewModel extends AndroidViewModel {
             mLog.debug("SHOW NAVIGATION");
         }
 
-        if (mainCallback != null) {
-            mainCallback.showNavigation();
+        if (mFragmentCallback == null) {
+            mLog.error("ERROR: mFragmentCallback == null");
+            return ;
         }
+
+        mFragmentCallback.showFragment(NavigationFragment.class);
     }
 
     public void notificationCount(int count) {
