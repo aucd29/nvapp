@@ -3,15 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <data>
+        <variable
+            name="vmodel"
+            type="net.sarangnamu.nvapp.viewmodel.MainViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <net.sarangnamu.common.widget.LockedDrawerLayout
+        <android.support.v4.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:openDrawer="start">
+            tools:openDrawer="start"
+            app:bindDrawerLockMode="@{vmodel.drawerLockMode}"
+            >
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/layout_main"
@@ -33,14 +41,14 @@
 
             </android.support.design.widget.NavigationView>
 
-        </net.sarangnamu.common.widget.LockedDrawerLayout>
+        </android.support.v4.widget.DrawerLayout>
 
-        <android.support.design.widget.CoordinatorLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/layout_navi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+             />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

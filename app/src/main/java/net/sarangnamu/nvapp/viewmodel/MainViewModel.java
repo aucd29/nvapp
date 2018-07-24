@@ -10,6 +10,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
@@ -34,8 +35,10 @@ public class MainViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(MainViewModel.class);
     
     public MutableLiveData<List<CategoryItem>> tabList = new MutableLiveData<>();
+
     public ObservableInt notificationVisible = new ObservableInt(View.GONE);
-    public ObservableInt notificationCount = new ObservableInt(0);
+    public ObservableInt notificationCount   = new ObservableInt(0);
+    public ObservableInt drawerLockMode      = new ObservableInt(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
     public MainCallback mainCallback;
 
@@ -59,15 +62,5 @@ public class MainViewModel extends AndroidViewModel {
         if (mainCallback != null) {
             mainCallback.showNavigation();
         }
-    }
-
-    public void notificationCount(int count) {
-        if (count > 0) {
-            notificationVisible.set(View.VISIBLE);
-        } else {
-            notificationVisible.set(View.GONE);
-        }
-
-        notificationCount.set(count);
     }
 }

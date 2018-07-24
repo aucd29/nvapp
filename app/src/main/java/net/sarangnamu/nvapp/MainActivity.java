@@ -60,9 +60,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
         initBinding();
 
-        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
-        ViewManager.get().setFragmentManager(this);
+        // main layout 설정
+        MainViewModel vmodel = viewModel(MainViewModel.class);
+        mBinding.setVmodel(vmodel);
 
+        // back pressed 설정
+        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
+
+        ViewManager.get().setFragmentManager(this);
         initNavigation();
         initUserInfo();
     }

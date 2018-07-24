@@ -67,8 +67,6 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
 
-        vmodel.notificationCount(2);
-
         mBinding.setVmodel(vmodel);
     }
 

@@ -155,6 +155,7 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
 //        mFragmentCallback.showFragment(LoginFragment.class);
 
         // navi는 상위 layout 에 fragment 를 bind 한다.
+        // 로그인이 안되어 있으면 login fragment 를 call 한다.
         mFragmentCallback.showFragment(FragmentParams.builder()
             .containerId(R.id.layout_navi)
             .animation("left")

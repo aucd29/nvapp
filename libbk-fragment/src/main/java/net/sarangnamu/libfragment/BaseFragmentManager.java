@@ -20,9 +20,6 @@ public abstract class BaseFragmentManager {
 
     protected FragmentManager mFrgmtManager;
 
-    public BaseFragmentManager() {
-    }
-
     public void setFragmentManager(FragmentActivity act) {
         if (act == null) {
             mLog.error("setFragmentManager act is null");
@@ -65,6 +62,7 @@ public abstract class BaseFragmentManager {
             FragmentTransaction trans = mFrgmtManager.beginTransaction();
             String tagName            = frgmt.getClass().getName();
 
+            // 미리 지정해둔 애니메이션 효과를 사용할 경우
             if (!TextUtils.isEmpty(params.anim)) {
                 switch (params.anim.toLowerCase()) {
                     case "left":
@@ -82,15 +80,14 @@ public abstract class BaseFragmentManager {
                             R.anim.slide_down_current, R.anim.slide_down_prev);
                         break;
                 }
+            } else if (params.transitionListener != null) {
+                // 사용자가 직접 커스텀한 애니메이션을 사용할 경우
+                params.transitionListener.onEvent(this, trans);
             }
 
             if (params.addMode) {
                 trans.add(params.containerViewId, frgmt, tagName);
             } else {
-                if (params.transitionListener != null) {
-                    params.transitionListener.onEvent(this, trans);
-                }
-
                 trans.replace(params.containerViewId, frgmt, tagName);
             }
 
@@ -183,6 +180,5 @@ public abstract class BaseFragmentManager {
     public interface TransitionListener {
         void onEvent(BaseFragmentManager manager, FragmentTransaction trans);
     }
-
 }
 

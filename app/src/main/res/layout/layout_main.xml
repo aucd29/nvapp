@@ -13,7 +13,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_web"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -28,6 +29,7 @@
             android:background="@color/colorPrimary"
             android:paddingTop="8dp"
             android:paddingBottom="10dp"
+            android:clickable="true"
             >
 
             <net.sarangnamu.libdingbat.widget.AwesomeSolid
