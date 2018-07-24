@@ -7,11 +7,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import net.sarangnamu.nvapp.MainApp;
 import net.sarangnamu.nvapp.R;
-import net.sarangnamu.nvapp.model.room.NvAppRoom;
-import net.sarangnamu.nvapp.model.room.category.CategoryItem;
-import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
+import net.sarangnamu.nvapp.model.local.NvAppRoom;
+import net.sarangnamu.nvapp.model.local.category.CategoryItem;
+import net.sarangnamu.nvapp.model.local.navigation.NavigationItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

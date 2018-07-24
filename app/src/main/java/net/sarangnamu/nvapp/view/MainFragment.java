@@ -18,7 +18,7 @@ import net.sarangnamu.common.arch.bindingadapter.WebViewBindingAdapter;
 import net.sarangnamu.libfragment.BaseFragment;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.databinding.LayoutMainBinding;
-import net.sarangnamu.nvapp.model.room.category.CategoryItem;
+import net.sarangnamu.nvapp.model.local.category.CategoryItem;
 import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 
 import org.slf4j.Logger;
@@ -114,6 +114,8 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             mWeb = new WebView(inflater.getContext());
             mWeb.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
+            // 생각했던 대로 동작하지 않는듯?
+            // #TAG 를 주면 알아서 페이지가 변경될 줄 알았는데
             WebViewBindingAdapter.webviewSetting(mWeb, url,
                 new WebViewClient() { },
                 new WebChromeClient() { });

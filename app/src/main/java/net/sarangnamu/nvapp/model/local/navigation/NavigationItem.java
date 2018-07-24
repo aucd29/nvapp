@@ -1,4 +1,4 @@
-package net.sarangnamu.nvapp.model.room.navigation;
+package net.sarangnamu.nvapp.model.local.navigation;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

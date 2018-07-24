@@ -17,9 +17,8 @@ import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
-import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
+import net.sarangnamu.nvapp.model.local.navigation.NavigationItem;
 import net.sarangnamu.nvapp.view.LoginFragment;
-import net.sarangnamu.nvapp.view.MainFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

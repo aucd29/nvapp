@@ -1,4 +1,4 @@
-package net.sarangnamu.nvapp.model.room.category;
+package net.sarangnamu.nvapp.model.local.category;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

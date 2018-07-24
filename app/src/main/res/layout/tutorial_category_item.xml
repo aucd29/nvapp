@@ -11,7 +11,7 @@
             type="net.sarangnamu.nvapp.viewmodel.CategoryViewModel" />
         <variable
             name="item"
-            type="net.sarangnamu.nvapp.model.room.category.CategoryItem" />
+            type="net.sarangnamu.nvapp.model.local.category.CategoryItem" />
     </data>
 
     <android.support.constraint.ConstraintLayout

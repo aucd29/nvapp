@@ -1,21 +1,18 @@
 package net.sarangnamu.nvapp.viewmodel;
 
-import android.animation.Animator;
 import android.app.Application;
 import android.arch.lifecycle.LifecycleOwner;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
-import net.sarangnamu.libcore.AnimationEndListener;
 import net.sarangnamu.libdingbat.widget.AwesomeSolid;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.model.DataManager;
-import net.sarangnamu.nvapp.model.room.category.CategoryItem;
+import net.sarangnamu.nvapp.model.local.category.CategoryItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

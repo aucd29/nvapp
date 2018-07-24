@@ -1,11 +1,12 @@
-package net.sarangnamu.nvapp.model.room;
+package net.sarangnamu.nvapp.model.local;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import net.sarangnamu.nvapp.model.room.category.CategoryDao;
-import net.sarangnamu.nvapp.model.room.category.CategoryItem;
-import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
+import net.sarangnamu.nvapp.model.local.category.CategoryDao;
+import net.sarangnamu.nvapp.model.local.category.CategoryItem;
+import net.sarangnamu.nvapp.model.local.navigation.NavigationDao;
+import net.sarangnamu.nvapp.model.local.navigation.NavigationItem;
 
 
 /**

@@ -62,12 +62,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
         // main layout 설정
         MainViewModel vmodel = viewModel(MainViewModel.class);
+        vmodel.mDisposable   = mDisposable;
         mBinding.setVmodel(vmodel);
 
         // back pressed 설정
         mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
 
         ViewManager.get().setFragmentManager(this);
+
         initNavigation();
         initUserInfo();
     }
@@ -174,7 +176,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
                 log.end();
             }));
 
-        viewModel(MainViewModel.class).mainCallback = this;
+        viewModel(MainViewModel.class).mMainCallback = this;
     }
 
     private void initUserInfo() {
@@ -193,6 +195,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     }
 
     private void loadFragments() {
+        // 이거 밖에 방법이 없나? 찾아봐야할 듯 ???
         synchronized (mCounter) {
             if (++mCounter > 1) {
                 runOnUiThread(this::loadMain);
@@ -367,7 +370,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     public void hideNavigation() {
         if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
             mBinding.drawerLayout.closeDrawer(Gravity.START);
-            return ;
         }
     }
     

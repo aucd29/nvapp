@@ -1,14 +1,10 @@
-package net.sarangnamu.nvapp.model.room;
+package net.sarangnamu.nvapp.model.local.navigation;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
-import android.support.annotation.NonNull;
-
-import net.sarangnamu.nvapp.model.room.navigation.NavigationItem;
 
 import java.util.List;
 
