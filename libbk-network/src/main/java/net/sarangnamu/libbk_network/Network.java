@@ -1,8 +1,6 @@
-package net.sarangnamu.nvapp.model.remote;
+package net.sarangnamu.libbk_network;
 
-import net.sarangnamu.common.net.SocketFactoryProxy;
 import net.sarangnamu.libcore.Json;
-import net.sarangnamu.nvapp.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,8 +13,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 24. <p/>
  */
 public class Network {
-    private static final String BASE_URL = "http://";
-
     private static final long TIMEOUT = 10;
 
     public void request() {

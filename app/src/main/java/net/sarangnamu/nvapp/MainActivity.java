@@ -12,6 +12,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+
 import net.sarangnamu.common.util.Invoke;
 import net.sarangnamu.common.widget.BaseActivity;
 import net.sarangnamu.libcore.AnimationEndListener;
@@ -23,11 +26,13 @@ import net.sarangnamu.libtutorial.TutorialParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
 import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
+import net.sarangnamu.nvapp.callback.NvLoginCallback;
 import net.sarangnamu.nvapp.databinding.ActivityMainBinding;
 import net.sarangnamu.nvapp.databinding.TutorialCategoryBinding;
 import net.sarangnamu.nvapp.databinding.TutorialIntroBinding;
 import net.sarangnamu.nvapp.view.MainFragment;
 import net.sarangnamu.nvapp.viewmodel.CategoryViewModel;
+import net.sarangnamu.nvapp.viewmodel.NvLoginViewModel;
 import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 import net.sarangnamu.nvapp.viewmodel.NavigationViewModel;
 import net.sarangnamu.nvapp.model.DataManager;
@@ -42,7 +47,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding>
-    implements MainCallback, FragmentCallback {
+    implements MainCallback, FragmentCallback, NvLoginCallback {
 
     private static final Logger mLog = LoggerFactory.getLogger(MainActivity.class);
 
@@ -53,23 +58,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         loadSplash();
-
         setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
 
         initBinding();
-
-        // main layout 설정
-        MainViewModel vmodel = viewModel(MainViewModel.class);
-        vmodel.mDisposable   = mDisposable;
-        mBinding.setVmodel(vmodel);
-
-        // back pressed 설정
-        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
-
-        ViewManager.get().setFragmentManager(this);
-
+        initViewModel();
+        initAppTerminator();
         initNavigation();
         initUserInfo();
     }
@@ -81,6 +76,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     @Override
     public void onBackPressed() {
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("BACK KEY");
+        }
+
         int navigationLayoutChildCount = mBinding.layoutNavi.getChildCount();
         if (navigationLayoutChildCount > 0) {
             if (mLog.isDebugEnabled()) {
@@ -93,12 +92,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
         if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
             mBinding.drawerLayout.closeDrawer(Gravity.START);
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("CLOSE NAVIGATION MENU");
+            }
+
             return ;
         }
 
         Fragment frgmt = ViewManager.get().getCurrentFragment();
         if (frgmt instanceof TutorialFragment) {
             // 현재 Fragment 가 tutorial 이면 back 키를 무시 한다.
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("IGNORE BACK KEY");
+            }
+
             return ;
         }
 
@@ -115,8 +122,34 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         super.onDestroy();
 
         if (mLog.isDebugEnabled()) {
-            mLog.debug("MAIN END");
+            mLog.debug("MAIN DESTROY");
         }
+    }
+
+    private void initViewModel() {
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("INIT MAIN VIEW MODEL");
+        }
+
+        // main layout 설정
+        MainViewModel vmodel = viewModel(MainViewModel.class);
+        vmodel.mDisposable   = mDisposable;
+        mBinding.setVmodel(vmodel);
+
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("INIT NV LOGIN VIEW MODEL");
+        }
+
+        // NV LOGIN 설정
+        NvLoginViewModel loginModel = viewModel(NvLoginViewModel.class);
+        loginModel.mMainCallback    = this;
+        loginModel.mNvLoginCallback = this;
+        loginModel.mDisposable      = mDisposable;
+    }
+
+    private void initAppTerminator() {
+        // back pressed 설정
+        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -159,6 +192,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     }
 
     private void initNavigation() {
+        ViewManager.get().setFragmentManager(this);
+
         final TimeLoger.TimeLog log = TimeLoger.start("NAVIGATION");
 
         matchParentNavigationView();
@@ -166,6 +201,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
+                if (mLog.isTraceEnabled()) {
+                    mLog.trace("INIT NAVIGATION VIEW MODEL");
+                }
+
                 vmodel.mMainCallback     = MainActivity.this;
                 vmodel.mFragmentCallback = MainActivity.this;
                 vmodel.init(MainActivity.this);
@@ -186,6 +225,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
             .subscribe(vmodel -> {
+                if (mLog.isTraceEnabled()) {
+                    mLog.trace("INIT USER INFO VIEW MODEL");
+                }
+
                 vmodel.init();
                 mBinding.navMain.setUser(vmodel);
 
@@ -206,8 +249,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     private void loadMain() {
         showFragment(FragmentParams.builder()
             .containerId(R.id.layout_main)
+            .add().backStack(false)
             .fragment(MainFragment.class)
-            .addMode().build());
+            .build());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -218,11 +262,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     private static final String TRANS_Y = "translationY";
     private static final String TRANS_X = "translationX";
+    private static final String ALPHA   = "alpha";
 
+    // 여기 코드를 따로 빼놓던지 해야할 듯
     private void loadTutorial() {
-        TutorialViewModel vmodel = viewModel(TutorialViewModel.class);
+        TutorialViewModel vmodel       = viewModel(TutorialViewModel.class);
         NvAppTutorialViewModel nvmodel = viewModel(NvAppTutorialViewModel.class);
         if (vmodel.isFinished()) {
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("IGNORE TUTORIAL");
+            }
+
             return ;
         }
 
@@ -242,7 +292,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
                     tutorialCategoryEvent((TutorialCategoryBinding) viewDataBinding);
                 }
             })
-            .finishedListener((result, obj) -> ViewManager.get().popBack())
+            .finishedListener((result, obj) -> {
+                if (mLog.isDebugEnabled()) {
+                    mLog.debug("TUTORIAL END");
+                }
+
+                ViewManager.get().popBack();
+            })
             .build();
 
         ViewManager.get().show(FragmentParams.builder().containerId(R.id.layout_main)
@@ -253,6 +309,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     // 객체 하나만 움직이는게 아니고 다수의 객체가 시간차를 두고 움직여야 되는 문제 때문에
     // view 를 직접 코드로 컨트롤 하기로 변경 함
     private void tutorialIntroEvent(@NonNull TutorialIntroBinding binding) {
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("TURORIAL INTRO");
+        }
+
         int screenWidth     = MainApp.screenX;
         int phoneFrameWidth = (int) (screenWidth * 0.7f);
         int margin          = (screenWidth - phoneFrameWidth) / 2;
@@ -273,12 +333,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         binding.panelRight2 .getLayoutParams().width = phoneFrameWidth;
 
         ObjectAnimator fadeInPhoneFrame  = ObjectAnimator.ofFloat(binding.phoneFrame,
-            "alpha", 0, 1);
+            ALPHA, 0, 1);
         ObjectAnimator transYPhoneFrame  = ObjectAnimator.ofFloat(binding.phoneFrame,
             TRANS_Y, moveY, 0);
 
         ObjectAnimator fadeInPanelCenter = ObjectAnimator.ofFloat(binding.panelCenter,
-            "alpha", 0, 1);
+            ALPHA, 0, 1);
         ObjectAnimator transYPanelCenter = ObjectAnimator.ofFloat(binding.panelCenter,
             TRANS_Y, moveY, 0);
 
@@ -292,8 +352,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         ObjectAnimator transYPanelRight  = ObjectAnimator.ofFloat(binding.panelRight,
             TRANS_Y, moveY, 0);
 
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("TUTORIAL ANIMATION START");
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("TUTORIAL ANIMATION START");
         }
 
         final AnimatorSet aniSet = new AnimatorSet();
@@ -305,8 +365,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             public void onAnimationEnd(Animator animator) {
                 animator.removeListener(this);
 
-                if (mLog.isDebugEnabled()) {
-                    mLog.debug("TUTORIAL BUTTON LAYOUT SHOW");
+                if (mLog.isTraceEnabled()) {
+                    mLog.trace("TUTORIAL BUTTON LAYOUT SHOW");
                 }
 
                 final ObjectAnimator transYButtonLayout = ObjectAnimator.ofFloat(binding.buttonLayout,
@@ -317,8 +377,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
                     public void onAnimationEnd(Animator animator) {
                         animator.removeListener(this);
 
-                        if (mLog.isDebugEnabled()) {
-                            mLog.debug("SCROLLING PANELS");
+                        if (mLog.isTraceEnabled()) {
+                            mLog.trace("SCROLLING PANELS");
                         }
 
                         int moveX = (phoneFrameWidth + sideX) * -1;
@@ -347,7 +407,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     }
 
     private void tutorialCategoryEvent(@NonNull TutorialCategoryBinding binding) {
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("TUTORIAL CATEGORY");
+        }
+
         CategoryViewModel cmodel = viewModel(CategoryViewModel.class);
+        cmodel.mDisposable = mDisposable;
         cmodel.init(this);
 
         binding.setCmodel(cmodel);
@@ -362,6 +427,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     @Override
     public void showNavigation() {
         if (!mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("SHOW NAVIGATION");
+            }
+
             mBinding.drawerLayout.openDrawer(Gravity.START);
         }
     }
@@ -369,10 +438,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     @Override
     public void hideNavigation() {
         if (mBinding.drawerLayout.isDrawerOpen(Gravity.START)) {
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("HIDE NAVIGATION");
+            }
+
             mBinding.drawerLayout.closeDrawer(Gravity.START);
         }
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////
     //
     // FragmentCallback
@@ -382,7 +455,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     @Override
     public void showFragment(@NonNull FragmentParams params) {
         if (mLog.isDebugEnabled()) {
-            mLog.debug("SHOW FRAGMENT = " + params.fragment.getSimpleName());
+            mLog.debug("SHOW FRAGMENT : " + params.fragment.getSimpleName());
         }
 
         ViewManager.get().show(params);
@@ -390,6 +463,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     @Override
     public void hideFragment() {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("HIDE FRAGMENT");
+        }
+        
         ViewManager.get().popBack();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // NvLoginCallback
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void login(@NonNull final OAuthLogin oauth, @NonNull final OAuthLoginHandler handler) {
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("REQUEST LOGIN");
+        }
+
+        oauth.startOauthLoginActivity(this, handler);
     }
 }

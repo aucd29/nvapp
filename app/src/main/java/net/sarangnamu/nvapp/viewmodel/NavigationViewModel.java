@@ -18,7 +18,6 @@ import net.sarangnamu.nvapp.callback.FragmentCallback;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.local.navigation.NavigationItem;
-import net.sarangnamu.nvapp.view.LoginFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +53,7 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     public void init(@NonNull LifecycleOwner owner) {
         DataManager.get().db().navigation().list().observe(owner, it -> {
             if (it == null) {
+                mLog.error("ERROR: it == null");
                 return ;
             }
 
@@ -71,10 +71,6 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     }
 
     public void close() {
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("close");
-        }
-
         if (mMainCallback == null) {
             return ;
         }
@@ -155,11 +151,11 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
 
         // navi는 상위 layout 에 fragment 를 bind 한다.
         // 로그인이 안되어 있으면 login fragment 를 call 한다.
-        mFragmentCallback.showFragment(FragmentParams.builder()
-            .containerId(R.id.layout_navi)
-            .animation("left")
-            .fragment(LoginFragment.class)
-            .build());
+//        mFragmentCallback.showFragment(FragmentParams.builder()
+//            .containerId(R.id.layout_navi)
+//            .animation(FragmentParams.ANI_LEFT)
+//            .fragment(LoginFragment.class)
+//            .build());
     }
     
     public void clickAddService() {
@@ -170,6 +166,10 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     }
 
     private void encouragingLogin() {
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("encouragingLogin");
+        }
+
         String msg = string(R.string.nav_encouraging_login);
         Spanned html;
 

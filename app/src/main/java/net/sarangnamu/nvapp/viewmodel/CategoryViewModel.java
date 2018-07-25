@@ -17,6 +17,7 @@ import net.sarangnamu.nvapp.model.local.category.CategoryItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,20 +27,24 @@ import io.reactivex.schedulers.Schedulers;
 public class CategoryViewModel extends RecyclerViewModel<CategoryItem> {
     private static final Logger mLog = LoggerFactory.getLogger(CategoryViewModel.class);
 
+    public CompositeDisposable mDisposable;
+
     public CategoryViewModel(@NonNull Application application) {
         super(application);
     }
 
     public void init(@NonNull LifecycleOwner owner) {
-        Disposable dp = DataManager.get().rxdb()
+        mDisposable.add(DataManager.get().rxdb()
             .subscribeOn(Schedulers.computation())
-            .subscribe(db -> setItems(db.category().list()));
+            .subscribe(db -> setItems(db.category().list())));
+
         initAdapter("tutorial_category_item");
     }
 
     public void selectAll() {
-        Disposable dp = DataManager.get().rxdb().subscribeOn(Schedulers.computation())
-            .subscribe(db -> db.category().toggle(true, false));
+        mDisposable.add(DataManager.get().rxdb()
+            .subscribeOn(Schedulers.computation())
+            .subscribe(db -> db.category().toggle(true, false)));
     }
 
     public void toggle(View view, CategoryItem item) {
@@ -50,10 +55,12 @@ public class CategoryViewModel extends RecyclerViewModel<CategoryItem> {
         item.enable = !item.enable;
         this.adapter.get().notifyItemChanged(item.position());
 
-        Disposable dp = DataManager.get().rxdb()
+        mDisposable.add(DataManager.get().rxdb()
             .subscribeOn(Schedulers.computation())
-            .subscribe(db -> db.category().update(item));
+            .subscribe(db -> db.category().update(item)));
     }
+
+    // FIXME 애니메이션 코드 테스트는 해보았고 동작하는건 확인했으나 동작상 오류가 존재하므로 보안해야할 부분 존재
 
     @BindingAdapter("bindCategoryBackground")
     public static void bindCategoryBg(View view, Boolean enable) {

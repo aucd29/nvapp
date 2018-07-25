@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BaseFragmentManager {
     private static final Logger mLog = LoggerFactory.getLogger(BaseFragmentManager.class);
-
+    
     protected FragmentManager mFrgmtManager;
 
     public void setFragmentManager(FragmentActivity act) {
@@ -65,17 +65,17 @@ public abstract class BaseFragmentManager {
             // 미리 지정해둔 애니메이션 효과를 사용할 경우
             if (!TextUtils.isEmpty(params.anim)) {
                 switch (params.anim.toLowerCase()) {
-                    case "left":
+                    case FragmentParams.ANI_LEFT:
                         trans.setCustomAnimations(R.anim.slide_in_current, R.anim.slide_in_next,
                             R.anim.slide_out_current, R.anim.slide_out_prev);
                         break;
 
-                    case "right":
+                    case FragmentParams.ANI_RIGHT:
                         trans.setCustomAnimations(R.anim.slide_out_current, R.anim.slide_out_prev
                             ,R.anim.slide_in_current, R.anim.slide_in_next);
                         break;
 
-                    case "up":
+                    case FragmentParams.ANI_UP:
                         trans.setCustomAnimations(R.anim.slide_up_current, R.anim.slide_up_next,
                             R.anim.slide_down_current, R.anim.slide_down_prev);
                         break;
@@ -95,7 +95,11 @@ public abstract class BaseFragmentManager {
                 trans.addToBackStack(tagName);
             }
 
-            trans.commit();
+            if (params.commitAllowingStateLoss) {
+                trans.commitAllowingStateLoss();
+            } else {
+                trans.commit();
+            }
 
             return frgmt;
         } catch (Exception e) {

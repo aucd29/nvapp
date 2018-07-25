@@ -24,6 +24,10 @@ import android.support.annotation.NonNull;
  * Created by <a href="mailto:aucd29@gmail.com">Burke Choi</a> on 2018. 5. 30.. <p/>
  */
 public class FragmentParams {
+    public static final String ANI_LEFT  = "left";
+    public static final String ANI_RIGHT = "right";
+    public static final String ANI_UP    = "up";
+
     @IdRes
     public final int containerViewId;
     public final Bundle bundle;
@@ -31,16 +35,20 @@ public class FragmentParams {
     public final String anim;
     public final boolean addMode;
     public final boolean backStack;
+    public final boolean commitAllowingStateLoss;
     public final BaseFragmentManager.TransitionListener transitionListener;
 
     private FragmentParams(Builder builder) {
         this.containerViewId    = builder.containerViewId;
+        this.bundle             = builder.bundle;
         this.fragment           = builder.fragment;
         this.anim               = builder.anim;
-        this.bundle             = builder.bundle;
-        this.backStack          = builder.backStack;
-        this.transitionListener = builder.transitionListener;
+
         this.addMode            = builder.addMode;
+        this.backStack          = builder.backStack;
+        this.commitAllowingStateLoss = builder.commitAllowingStateLoss;
+
+        this.transitionListener = builder.transitionListener;
     }
 
     public static Builder builder() {
@@ -58,9 +66,10 @@ public class FragmentParams {
         private int containerViewId;
         private Bundle bundle;
         private Class<?> fragment;
-        private boolean addMode   = false;
-        private boolean backStack = true;
         private String anim = null;
+        private boolean addMode = false;
+        private boolean backStack = true;
+        private boolean commitAllowingStateLoss = false;
         private BaseFragmentManager.TransitionListener transitionListener;
 
         public Builder containerId(@IdRes int containerViewId) {
@@ -88,14 +97,23 @@ public class FragmentParams {
             return this;
         }
 
-        public Builder addMode() {
-            this.addMode   = true;
-            this.backStack = false;
+        public Builder add() {
+            this.addMode = true;
+            return this;
+        }
+
+        public Builder replace() {
+            this.addMode = false;
             return this;
         }
 
         public Builder animation(@NonNull String direction) {
             this.anim = direction;
+            return this;
+        }
+
+        public Builder commitAllowingStateLoss(boolean commitAllowingStateLoss) {
+            this.commitAllowingStateLoss = commitAllowingStateLoss;
             return this;
         }
 

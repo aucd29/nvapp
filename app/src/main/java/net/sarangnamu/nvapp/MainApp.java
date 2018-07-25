@@ -43,10 +43,20 @@ public class MainApp extends Application {
     private void screenSize() {
         Point pt = new Point();
         WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
+        if (manager == null) {
+            mLog.error("ERROR: manager == null");
+            return ;
+        }
+
         manager.getDefaultDisplay().getSize(pt);
 
         screenX = pt.x;
         screenY = pt.y;
+
+        if (mLog.isTraceEnabled()) {
+            mLog.trace("SCREEN X : " + screenX + ", Y : " + screenY);
+        }
     }
 
     private void crashWatchDog() {

@@ -1,3 +1,10 @@
-include ':app', ':libnv-login'
-include ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core'
+include ':app'
+
+// BK
+include ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core', ':libbk-network'
+
+// HSP
 include ':libhsp-adapter'
+
+// NV
+include ':libnv-login'

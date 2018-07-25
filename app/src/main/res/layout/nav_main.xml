@@ -12,6 +12,10 @@
         <variable
             name="user"
             type="net.sarangnamu.nvapp.viewmodel.UserInfoViewModel" />
+
+        <variable
+            name="loginmodel"
+            type="net.sarangnamu.nvapp.viewmodel.NvLoginViewModel" />
     </data>
 
     <ScrollView
@@ -42,7 +46,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_android_black_24dp" />
+                    tools:src="@drawable/ic_android_black_24dp"
+                    android:onClick="@{() -> loginmodel.login()}"
+                    />
 
                 <!-- 로그인 전 -->
                 <TextView
@@ -358,7 +364,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     android:background="#dedede"
                     android:padding="10dp"
-                    android:onClick="@{() -> vmodel.login()}"
+                    android:onClick="@{() -> loginmodel.login()}"
                     >
 
                     <ImageView
