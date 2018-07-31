@@ -22,13 +22,12 @@ public class SplashActivity extends BaseActivity<SplashMainBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        overridePendingTransition(0, 0);
         initBinding();
 
         // TODO 서버에서 데이터를 전달 받아야할 작업들은 이곳에서 진행 한다.
 
         // SPLASH 최소 시간은 현재 1초
-        findViewById(R.id.splash).postDelayed(this::finish, 1000);
+        findViewById(R.id.splash).postDelayed(this::closeSplash, 1000);
     }
 
     @Override
@@ -38,4 +37,9 @@ public class SplashActivity extends BaseActivity<SplashMainBinding> {
 
     @Override
     public void onBackPressed() { }
+
+    private void closeSplash() {
+        finish();
+        overridePendingTransition(0, android.R.anim.fade_out);
+    }
 }
