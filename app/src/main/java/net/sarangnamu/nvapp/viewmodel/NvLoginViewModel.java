@@ -9,12 +9,20 @@ import android.support.annotation.NonNull;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
+import net.sarangnamu.libcore.Json;
 import net.sarangnamu.nvapp.BuildConfig;
 import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.callback.NvLoginCallback;
+import net.sarangnamu.nvapp.model.local.nvlogin.NvLogin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,9 +35,9 @@ public class NvLoginViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(NvLoginViewModel.class);
 
     private static final String API_URL             = "https://openapi.naver.com/v1/nid/me";
-    private static final String OAUTH_CLIENT_ID     = "jyvqXeaVOVmV";
-    private static final String OAUTH_CLIENT_SECRET = "527300A0_COq1_XV33cf";
-    private static final String OAUTH_CLIENT_NAME   = "";
+    private static String OAUTH_CLIENT_ID;
+    private static String OAUTH_CLIENT_SECRET;
+    private static String OAUTH_CLIENT_NAME;
 
     private OAuthLogin mLoginInstance = OAuthLogin.getInstance();
 
@@ -82,6 +90,25 @@ public class NvLoginViewModel extends AndroidViewModel {
 
     public NvLoginViewModel(@NonNull Application application) {
         super(application);
+
+        try {
+            // assets 의 경우 debug 와 release 를 구분하여 파일을 정의할 수 있는데
+            // 데이터를 숨겨야할 필요가 존재한 github 와 같은데 사용하기 유리하다.
+            // debug 쪽에 실제 데이터를 넣어두고 release 쪽에는 빈 데이터를 나두면 개발하는 동안
+            // 데이터 유출 문제가 없음
+            NvLogin nvlogin = Json.parse(application.getAssets().open("nvlogin.json"), NvLogin.class);
+
+            OAUTH_CLIENT_ID     = nvlogin.id;
+            OAUTH_CLIENT_SECRET = nvlogin.secret;
+            OAUTH_CLIENT_NAME   = nvlogin.name;
+
+            if (mLog.isDebugEnabled()) {
+                mLog.debug("\nID : " + nvlogin.id + "\nSECRET : " + nvlogin.secret + "\nNAME: " + nvlogin.name);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            mLog.error("ERROR: " + e.getMessage());
+        }
 
         if (BuildConfig.DEBUG) {
             mLoginInstance.showDevelopersLog(true);

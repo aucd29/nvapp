@@ -11,4 +11,5 @@ import com.nhn.android.naverlogin.OAuthLoginHandler;
  */
 public interface NvLoginCallback {
     void login(@NonNull final OAuthLogin oauth, @NonNull final OAuthLoginHandler handler);
+
 }

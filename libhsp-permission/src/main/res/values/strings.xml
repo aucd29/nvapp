@@ -1,0 +1,8 @@
+<resources>
+    <string name="permission_title">Add a privilege</string>
+    <string name="permission_error">A privilege error has occurred.</string>
+    <string name="permission_message">"You need to add a privilege to run the App properly."</string>
+
+    <string name="permission_set">Set</string>
+    <string name="permission_cancel">Cancel</string>
+</resources>

@@ -9,4 +9,7 @@ import android.support.annotation.NonNull;
 public interface MainCallback {
     void showNavigation();
     void hideNavigation();
+
+    void login();
+    void logout();
 }

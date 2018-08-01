@@ -128,6 +128,11 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
             mLog.debug("LOGIN");
         }
 
+        if (mMainCallback == null) {
+            return ;
+        }
+
+        mMainCallback.login();
     }
 
     public void notice() {

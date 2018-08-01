@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':libhsp-permission'
 
 // BK
 include ':libbk-dingbat', ':libbk-fragment', ':libbk-tutorial', ':libbk-core', ':libbk-network'

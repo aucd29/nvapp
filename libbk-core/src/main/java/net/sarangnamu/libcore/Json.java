@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 24. <p/>
@@ -36,11 +37,24 @@ public class Json {
         return mMapper;
     }
 
+    public static <T> T parse(@NonNull InputStream is, @NonNull Class<?> clazz) throws IOException, NullPointerException {
+        byte[] buf = new byte[512];
+        int len;
+        StringBuilder sb = new StringBuilder();
+        while ((len = is.read(buf)) > 0) {
+            sb.append(new String(buf, "UTF-8"));
+        }
+
+        is.close();
+
+        return parse(sb.toString(), clazz);
+    }
+
     public static <T> T parse(@NonNull String jsonString, @NonNull Class<?> clazz) throws IOException, NullPointerException {
         return (T) mapper().readValue(jsonString, clazz);
     }
 
-    public static <T> T parse(@NonNull String jsonString, @NonNull TypeReference valueTypeRef) throws IOException {
+    public static <T> T parse(@NonNull String jsonString, @NonNull TypeReference valueTypeRef) throws IOException, NullPointerException {
         return mapper().readValue(jsonString, valueTypeRef);
     }
 

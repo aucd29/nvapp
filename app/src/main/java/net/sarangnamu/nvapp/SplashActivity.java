@@ -22,6 +22,13 @@ public class SplashActivity extends BaseActivity<SplashMainBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // FIXME
+        // theme 에서 설정한 값이 fullscreen 형태로 동작하다 보니 pixel 을 맞춰야 되는데
+        // 일단 좀 귀찮은데 보기는 안 좋아서 theme 에는 색만 넣고 splash 화면을 fade in 하도록
+        // 수정
+        // 추후 맞춰서 진행해야 할 듯
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
         initBinding();
 
         // TODO 서버에서 데이터를 전달 받아야할 작업들은 이곳에서 진행 한다.

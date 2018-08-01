@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 import net.sarangnamu.common.util.Invoke;
@@ -51,22 +52,46 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
     private static final Logger mLog = LoggerFactory.getLogger(MainActivity.class);
 
-    private CompositeDisposable mDisposable = new CompositeDisposable();
     private Integer mCounter = 0;
-    private AppTerminator mAppTermiator;
+    private Bundle mSavedInstanceState = null;
+    private AppTerminator mAppTerminator;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         loadSplash();
         setTheme(R.style.AppTheme);
+        mSavedInstanceState = savedInstanceState;
 
         super.onCreate(savedInstanceState);
+
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("ON CREATE");
+        }
 
         initBinding();
         initViewModel();
         initAppTerminator();
         initNavigation();
         initUserInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("ON RESUME");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mLog.isDebugEnabled()) {
+            mLog.debug("ON PAUSE");
+        }
     }
 
     @Override
@@ -109,7 +134,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
             return ;
         }
 
-        mAppTermiator.onBackPressed();
+        mAppTerminator.onBackPressed();
     }
 
     @Override
@@ -122,7 +147,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         super.onDestroy();
 
         if (mLog.isDebugEnabled()) {
-            mLog.debug("MAIN DESTROY");
+            mLog.debug("ON DESTROY");
         }
     }
 
@@ -145,11 +170,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         loginModel.mMainCallback    = this;
         loginModel.mNvLoginCallback = this;
         loginModel.mDisposable      = mDisposable;
+        mBinding.navMain.setLoginmodel(loginModel);
     }
 
     private void initAppTerminator() {
         // back pressed 설정
-        mAppTermiator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
+        mAppTerminator = AppTerminator.create(MainActivity.this, mBinding.drawerLayout);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -247,11 +273,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     }
 
     private void loadMain() {
-        showFragment(FragmentParams.builder()
-            .containerId(R.id.layout_main)
-            .add().backStack(false)
-            .fragment(MainFragment.class)
-            .build());
+        if (mSavedInstanceState == null) {
+            showFragment(FragmentParams.builder()
+                .containerId(R.id.layout_main)
+                .backStack(false)
+                .fragment(MainFragment.class)
+                .commitAllowingStateLoss(true)  // screen off 일때 run 하면 문제가 될 수 있어서
+                .build());
+        } else {
+            if (mLog.isInfoEnabled()) {
+                mLog.info("mSaveInstanceStateNull == FALSE");
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -310,7 +343,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
     // view 를 직접 코드로 컨트롤 하기로 변경 함
     private void tutorialIntroEvent(@NonNull TutorialIntroBinding binding) {
         if (mLog.isTraceEnabled()) {
-            mLog.trace("TURORIAL INTRO");
+            mLog.trace("TUTORIAL INTRO");
         }
 
         int screenWidth     = MainApp.screenX;
@@ -446,6 +479,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
         }
     }
 
+    @Override
+    public void login() {
+        NvLoginViewModel vmodel = viewModel(NvLoginViewModel.class);
+        vmodel.login();
+    }
+
+    @Override
+    public void logout() {
+        NvLoginViewModel vmodel = viewModel(NvLoginViewModel.class);
+        vmodel.logout();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     //
     // FragmentCallback
@@ -484,4 +529,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding>
 
         oauth.startOauthLoginActivity(this, handler);
     }
+
+
 }
