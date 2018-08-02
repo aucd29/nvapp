@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">NvApp</string>
-    <string name="hello">HELLO</string>
+
+    <!-- MAIN -->
+
+    <string name="main_title_hello">HELLO</string>
 
     <!-- NAVIGATION -->
 
@@ -32,6 +35,8 @@
     <!-- TUTORIAL -->
     <string name="tutorial_intro_big_title">어쩌고 저쩌고</string>
     <string name="tutorial_intro_title">이러쿵 저러쿵</string>
+    <string name="tutorial_intro_login">로그인</string>
+    <string name="tutorial_intro_next">다음</string>
     <string name="tutorial_category_select_all">전체선택</string>
     <string name="tutorial_category_ok">확인</string>
     <string name="tutorial_permission_description">퍼미션이 어쩌고 저쩌고\n이러쿵저러쿵</string>

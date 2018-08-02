@@ -3,12 +3,16 @@ package net.sarangnamu.nvapp.view.tutorial;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.view.View;
 
 import net.sarangnamu.libcore.AnimationEndListener;
+import net.sarangnamu.nvapp.MainActivity;
 import net.sarangnamu.nvapp.MainApp;
 import net.sarangnamu.nvapp.databinding.TutorialIntroBinding;
+import net.sarangnamu.nvapp.viewmodel.NvLoginViewModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +35,10 @@ public class TutorialIntro {
             mLog.trace("TUTORIAL INTRO");
         }
 
+        MainActivity activity = (MainActivity) binding.phoneFrame.getContext();
+        NvLoginViewModel loginModel = ViewModelProviders.of(activity).get(NvLoginViewModel.class);
+        binding.setLoginModel(loginModel);
+
         int screenWidth     = MainApp.screenX;
         int phoneFrameWidth = (int) (screenWidth * 0.7f);
         int margin          = (screenWidth - phoneFrameWidth) / 2;
@@ -48,7 +56,7 @@ public class TutorialIntro {
         binding.panelLeft.getLayoutParams().width    = phoneFrameWidth;
         binding.panelCenter.getLayoutParams().width  = phoneFrameWidth;
         binding.panelRight.getLayoutParams().width   = phoneFrameWidth;
-        binding.panelRight2 .getLayoutParams().width = phoneFrameWidth;
+        binding.panelRight2.getLayoutParams().width  = phoneFrameWidth;
 
         ObjectAnimator fadeInPhoneFrame  = ObjectAnimator.ofFloat(binding.phoneFrame,
             ALPHA, 0, 1);

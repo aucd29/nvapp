@@ -5,17 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.app.Activity" />
+
         <variable
-            name="vmodel"
+            name="navigationModel"
             type="net.sarangnamu.nvapp.viewmodel.NavigationViewModel" />
-
         <variable
-            name="user"
+            name="userModel"
             type="net.sarangnamu.nvapp.viewmodel.UserInfoViewModel" />
-
         <variable
-            name="loginmodel"
+            name="loginModel"
             type="net.sarangnamu.nvapp.viewmodel.NvLoginViewModel" />
+        <variable
+            name="drawerModel"
+            type="net.sarangnamu.nvapp.viewmodel.DrawerLayoutViewModel" />
+        <variable
+            name="drawerLayout"
+            type="android.support.v4.widget.DrawerLayout" />
     </data>
 
     <ScrollView
@@ -42,12 +48,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:src="@{user.info.pic}"
+                    android:src="@{userModel.info.pic}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_android_black_24dp"
-                    android:onClick="@{() -> loginmodel.login()}"
+                    android:onClick="@{() -> loginModel.login((Activity) context)}"
                     />
 
                 <!-- 로그인 전 -->
@@ -56,9 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="@{vmodel.loginMsg}"
+                    android:text="@{navigationModel.loginMsg}"
                     android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.loginMsgVisible}"
+                    android:visibility="@{navigationModel.loginMsgVisible}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/user_image"
                     app:layout_constraintTop_toTopOf="parent"
@@ -72,9 +78,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="@{user.info.id}"
+                    android:text="@{userModel.info.id}"
                     android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.userIdVisible}"
+                    android:visibility="@{navigationModel.userIdVisible}"
                     app:layout_constraintStart_toEndOf="@+id/login_msg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.333"
@@ -86,9 +92,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="@{user.info.email}"
+                    android:text="@{userModel.info.email}"
                     android:textColor="@android:color/white"
-                    android:visibility="@{vmodel.userEmailVisible}"
+                    android:visibility="@{navigationModel.userEmailVisible}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/user_image"
                     app:layout_constraintTop_toBottomOf="@+id/user_id"
@@ -102,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:onClick="@{() -> vmodel.close()}"
+                    android:onClick="@{() -> drawerModel.hide(drawerLayout)}"
                     android:text="@string/fa_window_close"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
@@ -115,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:onClick="@{() -> vmodel.notification()}"
+                    android:onClick="@{() -> navigationModel.notification()}"
                     android:text="@string/fa_bell"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
@@ -128,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:onClick="@{() -> vmodel.setting()}"
+                    android:onClick="@{() -> navigationModel.setting()}"
                     android:text="@string/fa_cog"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
@@ -161,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="@{vmodel.encouragingLogin}"
+                    android:text="@{navigationModel.encouragingLogin}"
                     app:layout_constraintStart_toEndOf="@+id/ic_lock"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -183,11 +189,11 @@
                 tools:layoutManager="android.support.v7.widget.GridLayoutManager"
                 tools:listitem="@layout/nav_grid_item"
                 tools:spanCount="4"
-                app:bindAdapter="@{vmodel.adapter}"
-                app:bindItems="@{vmodel.items}"
-                app:bindHorDecoration="@{vmodel.horDecoration}"
-                app:bindVerDecoration="@{vmodel.verDecoration}"
-                app:bindLockedGridLayoutManager="@{vmodel.spanCount}"
+                app:bindAdapter="@{navigationModel.adapter}"
+                app:bindItems="@{navigationModel.items}"
+                app:bindHorDecoration="@{navigationModel.horDecoration}"
+                app:bindVerDecoration="@{navigationModel.verDecoration}"
+                app:bindLockedGridLayoutManager="@{navigationModel.spanCount}"
                 />
 
             <!-- GRID CONTROLLER -->
@@ -220,7 +226,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ic_reset"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.gridReset()}"
+                    android:onClick="@{() -> navigationModel.gridReset()}"
                     tools:text="RESET" />
 
                 <net.sarangnamu.libdingbat.widget.AwesomeSolid
@@ -242,7 +248,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ic_orderby"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.gridOrderBy()}"
+                    android:onClick="@{() -> navigationModel.gridOrderBy()}"
                     tools:text="ORDER BY" />
 
                 <TextView
@@ -256,7 +262,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{() -> vmodel.allServices()}"
+                    android:onClick="@{() -> navigationModel.allServices()}"
                     tools:text="ALL SERVICES" />
 
             </android.support.constraint.ConstraintLayout>
@@ -303,7 +309,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/colorAccent"
                     tools:text="START"
-                    android:onClick="@{() -> vmodel.startPay()}"
+                    android:onClick="@{() -> navigationModel.startPay()}"
                     />
 
                 <View
@@ -340,7 +346,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/pay_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:minHeight="50dp"
-                android:onClick="@{() -> vmodel.banner()}"
+                android:onClick="@{() -> navigationModel.banner()}"
                 />
 
             <!-- BUTTONS -->
@@ -364,7 +370,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     android:background="#dedede"
                     android:padding="10dp"
-                    android:onClick="@{() -> loginmodel.login()}"
+                    android:onClick="@{() -> loginModel.login((Activity) context)}"
                     >
 
                     <ImageView
@@ -407,7 +413,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     android:background="#ececec"
                     android:padding="10dp"
-                    android:onClick="@{() -> vmodel.notice()}"
+                    android:onClick="@{() -> navigationModel.notice()}"
                     >
 
                     <ImageView

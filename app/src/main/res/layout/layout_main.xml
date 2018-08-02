@@ -6,8 +6,14 @@
 
     <data>
         <variable
-            name="vmodel"
+            name="mainModel"
             type="net.sarangnamu.nvapp.viewmodel.MainViewModel" />
+        <variable
+            name="drawerModel"
+            type="net.sarangnamu.nvapp.viewmodel.DrawerLayoutViewModel" />
+        <variable
+            name="drawerLayout"
+            type="android.support.v4.widget.DrawerLayout" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -46,13 +52,13 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
-                android:onClick="@{() -> vmodel.showNavigation()}"
+                android:onClick="@{() -> drawerModel.show(drawerLayout)}"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{vmodel.notificationVisible}"
+                android:visibility="@{mainModel.notificationVisible}"
                 />
 
             <TextView
@@ -60,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="HELLO"
-                android:text="HELLO"
+                android:text="@string/main_title_hello"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

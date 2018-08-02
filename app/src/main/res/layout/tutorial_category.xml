@@ -10,8 +10,8 @@
             name="vmodel"
             type="net.sarangnamu.libtutorial.viewmodel.TutorialViewModel" />
         <variable
-            name="nvmodel"
-            type="net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel" />
+            name="animModel"
+            type="net.sarangnamu.nvapp.viewmodel.TutorialAnimViewModel" />
         <variable
             name="categoryModel"
             type="net.sarangnamu.nvapp.viewmodel.CategoryViewModel" />
@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.14"
-            app:bindFadeIn="@{nvmodel.logoFadeDuration}"
+            app:bindFadeIn="@{animModel.logoFadeDuration}"
             />
 
         <TextView
@@ -45,8 +45,8 @@
             android:text="@string/tutorial_intro_big_title"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:bindFadeIn="@{nvmodel.titleFadeDuration}"
-            app:bindTransitionY="@{nvmodel.titleTransitionY}"
+            app:bindFadeIn="@{animModel.titleFadeDuration}"
+            app:bindTransitionY="@{animModel.titleTransitionY}"
             />
 
         <TextView
@@ -58,8 +58,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/big_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:bindFadeIn="@{nvmodel.titleFadeDuration}"
-            app:bindTransitionY="@{nvmodel.titleTransitionY}"
+            app:bindFadeIn="@{animModel.titleFadeDuration}"
+            app:bindTransitionY="@{animModel.titleTransitionY}"
             android:onClick="@{() -> categoryModel.selectAll()}"
             />
 

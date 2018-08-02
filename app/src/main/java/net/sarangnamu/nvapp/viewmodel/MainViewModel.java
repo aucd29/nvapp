@@ -6,9 +6,9 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
 
-import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.local.category.CategoryItem;
 
@@ -34,8 +34,6 @@ public class MainViewModel extends AndroidViewModel {
     public ObservableInt drawerLockMode      = new ObservableInt(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     public CompositeDisposable mDisposable;
 
-    public MainCallback mMainCallback;
-
     public MainViewModel(@NonNull Application application) {
         super(application);
     }
@@ -48,16 +46,23 @@ public class MainViewModel extends AndroidViewModel {
             .subscribe(items -> tabList.postValue(items)));
     }
 
-    public void showNavigation() {
-        if (mLog.isDebugEnabled()) {
-            mLog.debug("SHOW NAVIGATION");
-        }
+    public void showNavigation(DrawerLayout drawerLayout) {
+        if (!drawerLayout.isDrawerOpen(Gravity.START)) {
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("SHOW NAVIGATION");
+            }
 
-        if (mMainCallback == null) {
-            mLog.error("ERROR: mMainCallback == null");
-            return ;
+            drawerLayout.openDrawer(Gravity.START);
         }
+    }
 
-        mMainCallback.showNavigation();
+    public void hideNavigation(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
+            if (mLog.isTraceEnabled()) {
+                mLog.trace("HIDE NAVIGATION");
+            }
+
+            drawerLayout.closeDrawer(Gravity.START);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package net.sarangnamu.nvapp.viewmodel;
 
+import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
@@ -11,18 +12,12 @@ import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 import net.sarangnamu.libcore.Json;
 import net.sarangnamu.nvapp.BuildConfig;
-import net.sarangnamu.nvapp.callback.MainCallback;
-import net.sarangnamu.nvapp.callback.NvLoginCallback;
 import net.sarangnamu.nvapp.model.local.nvlogin.NvLogin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,8 +36,6 @@ public class NvLoginViewModel extends AndroidViewModel {
 
     private OAuthLogin mLoginInstance = OAuthLogin.getInstance();
 
-    public MainCallback mMainCallback;
-    public NvLoginCallback mNvLoginCallback;
     public CompositeDisposable mDisposable;
 
     private MutableLiveData<String> mAccessToken  = new MutableLiveData<>();
@@ -121,13 +114,8 @@ public class NvLoginViewModel extends AndroidViewModel {
         mLoginInstance.init(getApplication(), OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
     }
 
-    public void login() {
-        if (mNvLoginCallback == null) {
-            mLog.error("ERROR: mMainCallback == null");
-            return ;
-        }
-
-        mNvLoginCallback.login(mLoginInstance, mHandler);
+    public void login(Activity activity) {
+        mLoginInstance.startOauthLoginActivity(activity, mHandler);
     }
 
     public void logout() {

@@ -1,6 +1,5 @@
 package net.sarangnamu.nvapp;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Point;
@@ -30,7 +29,7 @@ public class MainApp extends Application {
         super.onCreate();
 
         if (mLog.isDebugEnabled()) {
-            mLog.debug("\n====\n\nAPPLICATION START\n\n====");
+            mLog.debug("\n====\n\nAPP START\n\n====");
         }
 
         // 디비 초기화

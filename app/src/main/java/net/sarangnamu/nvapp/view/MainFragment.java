@@ -16,9 +16,11 @@ import android.webkit.WebViewClient;
 
 import net.sarangnamu.common.arch.bindingadapter.WebViewBindingAdapter;
 import net.sarangnamu.libfragment.BaseFragment;
+import net.sarangnamu.nvapp.MainActivity;
 import net.sarangnamu.nvapp.R;
 import net.sarangnamu.nvapp.databinding.LayoutMainBinding;
 import net.sarangnamu.nvapp.model.local.category.CategoryItem;
+import net.sarangnamu.nvapp.viewmodel.DrawerLayoutViewModel;
 import net.sarangnamu.nvapp.viewmodel.MainViewModel;
 
 import org.slf4j.Logger;
@@ -40,9 +42,9 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             mLog.debug("CREATE");
         }
 
-        MainViewModel vmodel = viewModel(MainViewModel.class);
-        vmodel.init();
-        vmodel.tabList.observe(this, list -> {
+        MainViewModel mainModel = viewModel(MainViewModel.class);
+        mainModel.init();
+        mainModel.tabList.observe(this, list -> {
             if (list == null) {
                 mLog.error("ERROR: list == null");
                 return ;
@@ -67,7 +69,11 @@ public class MainFragment extends BaseFragment<LayoutMainBinding> {
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
 
-        mBinding.setVmodel(vmodel);
+        mBinding.setMainModel(mainModel);
+
+        DrawerLayoutViewModel drawerModel = viewModel(DrawerLayoutViewModel.class);
+        mBinding.setDrawerModel(drawerModel);
+        mBinding.setDrawerLayout(((MainActivity)getActivity()).binding().drawerLayout);
     }
 
     @Override

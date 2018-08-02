@@ -12,10 +12,7 @@ import android.view.View;
 
 import com.hanwha.libhsp_adapter.arch.viewmodel.RecyclerViewModel;
 
-import net.sarangnamu.libfragment.FragmentParams;
 import net.sarangnamu.nvapp.R;
-import net.sarangnamu.nvapp.callback.FragmentCallback;
-import net.sarangnamu.nvapp.callback.MainCallback;
 import net.sarangnamu.nvapp.model.DataManager;
 import net.sarangnamu.nvapp.model.local.navigation.NavigationItem;
 
@@ -41,9 +38,6 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
     public ObservableInt verDecoration    = new ObservableInt(R.drawable.shape_divider_ver);
     public ObservableInt spanCount        = new ObservableInt(4);
 
-    public MainCallback mMainCallback;
-    public FragmentCallback mFragmentCallback;
-
     public NavigationViewModel(Application app) {
         super(app);
 
@@ -68,14 +62,6 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         });
 
         initAdapter(new String[] {"nav_grid_item", "nav_grid_plus"});
-    }
-
-    public void close() {
-        if (mMainCallback == null) {
-            return ;
-        }
-
-        mMainCallback.hideNavigation();
     }
 
     public void notification() {
@@ -127,12 +113,6 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
         if (mLog.isDebugEnabled()) {
             mLog.debug("LOGIN");
         }
-
-        if (mMainCallback == null) {
-            return ;
-        }
-
-        mMainCallback.login();
     }
 
     public void notice() {
@@ -146,21 +126,7 @@ public class NavigationViewModel extends RecyclerViewModel<NavigationItem> {
             mLog.debug("CLICK SERVICE : " + string(labelId));
         }
 
-        // 임시로 로그인 fragment 를 call
-        if (mFragmentCallback == null) {
-            mLog.error("ERROR: mFragmentCallback == null");
-            return ;
-        }
 
-//        mFragmentCallback.showFragment(LoginFragment.class);
-
-        // navi는 상위 layout 에 fragment 를 bind 한다.
-        // 로그인이 안되어 있으면 login fragment 를 call 한다.
-//        mFragmentCallback.showFragment(FragmentParams.builder()
-//            .containerId(R.id.layout_navi)
-//            .animation(FragmentParams.ANI_LEFT)
-//            .fragment(LoginFragment.class)
-//            .build());
     }
     
     public void clickAddService() {

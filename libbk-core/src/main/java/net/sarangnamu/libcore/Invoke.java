@@ -35,11 +35,23 @@ public class Invoke {
         }
     }
 
-    public static void method(final Class<?> clazz, String methodName,
-                              final Class<?>[] argList, final Object... args) {
+    public static void method(final Object obj, @NonNull String name,
+                              Class<?>[] types, Object... args) {
         try {
-            Method method = clazz.getDeclaredMethod(methodName, argList);
-            method.invoke(clazz, args);
+            Method method = obj.getClass().getDeclaredMethod(name, types);
+            method.invoke(obj, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mLog.error("ERROR: " + e.getMessage());
+        }
+    }
+
+    public static void method(final Object obj, @NonNull String name,
+                              Object argv) {
+        try {
+            Method method = obj.getClass().getDeclaredMethod(name,
+                new Class<?>[] { argv.getClass() });
+            method.invoke(obj, new Object[] { argv });
         } catch (Exception e) {
             e.printStackTrace();
             mLog.error("ERROR: " + e.getMessage());
