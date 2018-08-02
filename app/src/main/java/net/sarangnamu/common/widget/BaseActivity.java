@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by <a href="mailto:aucd29@hanwha.com">Burke Choi</a> on 2018. 7. 10. <p/>
  */
 public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
+    @NonNull
     protected T mBinding;
 
     protected void initBinding() {
@@ -24,6 +25,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     @LayoutRes
     protected abstract int layoutId();
 
+    @NonNull
     protected <VM extends ViewModel> VM viewModel(@NonNull Class<VM> modelClass) {
         return ViewModelProviders.of(this).get(modelClass);
     }

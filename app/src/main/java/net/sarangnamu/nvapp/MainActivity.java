@@ -247,6 +247,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private void loadTutorial() {
         TutorialViewModel vmodel        = viewModel(TutorialViewModel.class);
         TutorialAnimViewModel animModel = viewModel(TutorialAnimViewModel.class);
+
         if (vmodel.isFinished()) {
             if (mLog.isTraceEnabled()) {
                 mLog.trace("IGNORE TUTORIAL");
