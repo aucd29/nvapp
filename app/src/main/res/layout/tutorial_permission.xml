@@ -5,24 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.app.Activity" />
+
         <variable
             name="vmodel"
             type="net.sarangnamu.libtutorial.viewmodel.TutorialViewModel" />
         <variable
-            name="nvmodel"
-            type="net.sarangnamu.nvapp.viewmodel.NvAppTutorialViewModel" />
-        <variable
             name="permissionModel"
             type="net.sarangnamu.nvapp.viewmodel.PermissionViewModel" />
-        <variable
-            name="activity"
-            type="android.app.Activity" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/button_layout"
@@ -40,8 +35,8 @@
                 android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="시작하잖다"
-                android:onClick="@{() -> permissionModel.confirm(activity, vmodel)}"
+                android:text="@string/tutorial_permission_start"
+                android:onClick="@{() -> permissionModel.confirm((Activity) context, vmodel)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />

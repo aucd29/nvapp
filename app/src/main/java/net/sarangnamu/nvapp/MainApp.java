@@ -30,7 +30,7 @@ public class MainApp extends Application {
         super.onCreate();
 
         if (mLog.isDebugEnabled()) {
-            mLog.debug("APPLICATION START");
+            mLog.debug("\n====\n\nAPPLICATION START\n\n====");
         }
 
         // 디비 초기화

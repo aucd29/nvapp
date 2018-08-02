@@ -25,8 +25,6 @@ public class TutorialPermission {
         }
 
         PermissionViewModel permissionModel = ViewModelProviders.of(activity).get(PermissionViewModel.class);
-
-        binding.setActivity(activity);
         binding.setPermissionModel(permissionModel);
     }
 }

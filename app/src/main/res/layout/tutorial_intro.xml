@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
     <data>
         <variable
             name="vmodel"
@@ -94,8 +95,6 @@
             android:background="#c4c4c4"
             />
 
-        <!--app:bindEndCellStartAnimation="@{nvmodel.phoneFrameFade}"-->
-
         <!-- RIGHT2 -->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/panel_right2"
@@ -118,9 +117,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/shape_tutorial_phone_frame"
             />
-
-            <!--app:bindFadeIn="@{nvmodel.phoneFrameFade}"-->
-            <!--app:bindTransitionY="@{nvmodel.phoneFrameTransition}"-->
 
         <!-- buttons -->
 

@@ -7,13 +7,13 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 
 import com.hanwha.libhsp_permission.PermissionParams;
-import com.hanwha.libhsp_permission.PermissionUtils;
 import com.hanwha.libhsp_permission.RxPermissionResult;
 import com.hanwha.libhsp_permission.RxPermissions;
 
 import net.sarangnamu.libcore.dialog.Dialog;
 import net.sarangnamu.libcore.dialog.DialogParams;
 import net.sarangnamu.libtutorial.viewmodel.TutorialViewModel;
+import net.sarangnamu.nvapp.R;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class PermissionViewModel extends AndroidViewModel {
 
     public void confirm(Activity activity, TutorialViewModel vmodel) {
         Dialog.show(DialogParams.builder(activity)
-            .message("퍼미션이 어쩌고 저쩌고\n이러쿵저러쿵")
+            .message(R.string.tutorial_permission_description)
             .confirm()
             .listener((res, dlgInterface) -> {
                 if (res) {
