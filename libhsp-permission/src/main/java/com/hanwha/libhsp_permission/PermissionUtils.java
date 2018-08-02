@@ -42,7 +42,7 @@ import android.support.v4.content.ContextCompat;
 
     or
 
-    RxPermissions.params(PermissionParams.builder()
+    RxPermissions.create(PermissionParams.builder()
         .activity(HoneMobileActivity.this)
         .permissions(permissions)
         .reqCode(PermissionUtils.REQ_MAIN).build())
@@ -102,7 +102,7 @@ public final class PermissionUtils {
     }
 
     /**
-     * checkPermissions(@NonNull PermissionParams params) 을 이용하세요
+     * checkPermissions(@NonNull PermissionParams create) 을 이용하세요
      *
      * @param activity application activity
      * @param permissions 검사할 퍼미션들
@@ -115,8 +115,8 @@ public final class PermissionUtils {
                                         final int reqCode,
                                         @NonNull final OnPermissionListener listener) {
 
-        checkPermissions(PermissionParams.builder().reqCode(reqCode)
-            .activity(activity).permissions(permissions).listener(listener).build());
+        checkPermissions(PermissionParams.builder(activity).reqCode(reqCode)
+            .permissions(permissions).listener(listener).build());
     }
 
     /**

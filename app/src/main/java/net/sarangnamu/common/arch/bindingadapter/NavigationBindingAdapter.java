@@ -13,8 +13,8 @@ import android.view.WindowManager;
 public class NavigationBindingAdapter {
     @BindingAdapter("bindFullscreen")
     public static void fullsceen(NavigationView view, int value) {
-//        Context context = view.getContext();
-//        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        Context activity = view.getContext();
+//        WindowManager manager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
 //
 //        Point pt = new Point();
 //        manager.getDefaultDisplay().getSize(pt);

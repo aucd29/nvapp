@@ -57,8 +57,8 @@ public final class PermissionParams {
         return activity;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(Activity activity) {
+        return new Builder(activity);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -70,21 +70,20 @@ public final class PermissionParams {
     public static final class Builder {
         private int reqCode = 0;
         private FragmentActivity activity;
-        private List<String> permissions = new ArrayList<>();
         private OnPermissionListener listener;
+        private List<String> permissions = new ArrayList<>();
+
+        Builder(Activity activity) {
+            this.activity = (FragmentActivity) activity;
+        }
+
+        public Builder ignoreInfoDialog() {
+            this.reqCode = PermissionUtils.REQ_MAIN;
+            return this;
+        }
 
         public Builder reqCode(final int reqCode) {
             this.reqCode = reqCode;
-            return this;
-        }
-
-        public Builder activity(@NonNull final FragmentActivity activity) {
-            this.activity = activity;
-            return this;
-        }
-
-        public Builder activity(@NonNull final Activity activity) {
-            this.activity = (FragmentActivity) activity;
             return this;
         }
 

@@ -41,7 +41,7 @@ public final class RxPermissions extends Observable<RxPermissionResult> {
      * @param params 퍼미션 체크에 필요한 파라메터
      * @return RxPermissions 객체
      */
-    public static RxPermissions params(@NonNull final PermissionParams params) {
+    public static RxPermissions create(@NonNull final PermissionParams params) {
         if (mLog.isDebugEnabled()) {
             mLog.debug("CHECK PERMISSION (" + params.permissions.size() + ")");
         }

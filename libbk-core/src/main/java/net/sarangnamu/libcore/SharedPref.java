@@ -34,7 +34,7 @@ public class SharedPref {
         editor = prefs.edit();
     }
 
-    public void set(String key, String value) {
+    public void set(@NonNull String key, String value) {
         if (TextUtils.isEmpty(value)) {
             editor.putString(key, value);
         } else {
@@ -44,19 +44,18 @@ public class SharedPref {
         editor.commit();
     }
 
-    public void set(String key, int value) {
+    public void set(@NonNull String key, int value) {
         editor.putInt(key, value);
         editor.commit();
     }
 
-    public void set(String key, boolean value) {
+    public void set(@NonNull String key, boolean value) {
         editor.putBoolean(key, value);
         editor.commit();
     }
 
-
-    public String get(String key, String defaultVal) {
-        if (TextUtils.isEmpty(defaultVal)) {
+    public String get(@NonNull String key, String defaultVal) {
+        if (!TextUtils.isEmpty(defaultVal)) {
             defaultVal = Base64.encodeToString(defaultVal.getBytes(), Base64.DEFAULT);
         }
 
@@ -68,11 +67,11 @@ public class SharedPref {
         return new String(Base64.decode(loaded, Base64.DEFAULT));
     }
 
-    public int get(String key, int defaultVal) {
+    public int get(@NonNull String key, int defaultVal) {
         return prefs.getInt(key, defaultVal);
     }
 
-    public boolean get(String key, boolean defaultVal) {
+    public boolean get(@NonNull String key, boolean defaultVal) {
         return prefs.getBoolean(key, defaultVal);
     }
 }

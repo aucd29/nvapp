@@ -86,9 +86,10 @@ dependencies {
 
     implementation project(path: ':libbk-core')
     implementation project(path: ':libbk-network')
-    implementation project(path: ':libhsp-adapter')
     implementation project(path: ':libbk-dingbat')
     implementation project(path: ':libbk-fragment')
     implementation project(path: ':libbk-tutorial')
+    implementation project(path: ':libhsp-adapter')
+    implementation project(path: ':libhsp-permission')
 
 }
