@@ -18,6 +18,7 @@ import net.sarangnamu.nvapp.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
@@ -26,6 +27,8 @@ import io.reactivex.functions.Function;
  */
 public class PermissionViewModel extends AndroidViewModel {
     private static final Logger mLog = LoggerFactory.getLogger(PermissionViewModel.class);
+
+    public CompositeDisposable disposable;
 
     public PermissionViewModel(@NonNull Application application) {
         super(application);
@@ -37,7 +40,7 @@ public class PermissionViewModel extends AndroidViewModel {
             .confirm()
             .listener((res, dlgInterface) -> {
                 if (res) {
-                    Disposable d = RxPermissions.create(PermissionParams.builder(activity)
+                    disposable.add(RxPermissions.create(PermissionParams.builder(activity)
                         .permission(Manifest.permission.ACCESS_FINE_LOCATION)
                         .ignoreInfoDialog()
                         .build())
@@ -48,7 +51,7 @@ public class PermissionViewModel extends AndroidViewModel {
                             }
 
                             vmodel.next();
-                        });
+                        }));
                 } else {
                     vmodel.next();
                 }

@@ -293,4 +293,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     public ActivityMainBinding binding() {
         return mBinding;
     }
+
+    public CompositeDisposable disposable() {
+        return mDisposable;
+    }
 }

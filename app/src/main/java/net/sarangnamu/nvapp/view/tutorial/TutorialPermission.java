@@ -25,6 +25,8 @@ public class TutorialPermission {
         }
 
         PermissionViewModel permissionModel = ViewModelProviders.of(activity).get(PermissionViewModel.class);
+        permissionModel.disposable = activity.disposable();
+
         binding.setPermissionModel(permissionModel);
     }
 }
