@@ -44,6 +44,7 @@ public class CategoryItem implements IHspDiff, IHspItem, IHspPosition {
     @Override
     public boolean compare(Object item) {
         CategoryItem obj = (CategoryItem) item;
+
         return label.equals(obj.label) && enable == obj.enable && tag.equals(obj.tag);
     }
 

@@ -163,6 +163,18 @@
                 />
         </android.support.constraint.ConstraintLayout>
 
+        <!-- TEST -->
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:lottie_rawRes="@raw/dot"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true" />
+
+
     </android.support.constraint.ConstraintLayout>
 
 </layout>
